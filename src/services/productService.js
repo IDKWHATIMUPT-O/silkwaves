@@ -4,3 +4,8 @@ export async function getProducts() {
   const res = await fetch(`${API_BASE_URL}/products`);
   return res.json();
 }
+export const categories = [
+  'Type 1 Sarees',
+  'Type 2 Sarees',
+  'Type 3 Sarees'
+];
