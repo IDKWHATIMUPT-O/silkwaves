@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
       <div className="product-card__content">
         <span className="eyebrow">{product.category}</span>
         <h3>
-          <Link to={`/product/${product.slug}`}>{product.title}</Link>
+          <Link to={`/product/${product.id}`}>{product.title}</Link>
         </h3>
         <p>{formatPrice(product.price)}</p>
       </div>
