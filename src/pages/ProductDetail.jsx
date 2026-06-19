@@ -18,7 +18,7 @@ export default function ProductDetail() {
       const res = await fetch(`${API}/products`);
       const data = await res.json();
 
-      const found = data.find((p) => p.id === id);
+      const found = data.find((p) => String(p.id) === String(id));
       setProduct(found);
 
       if (found?.coverImage) {
