@@ -1,7 +1,6 @@
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import ProductGrid from '../components/product/ProductGrid.jsx';
 import Button from '../components/ui/Button.jsx';
 import { formatPrice } from '../utils/currency.js';
 
@@ -12,17 +11,33 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(`${API}/products`);
-      const data = await res.json();
+      try {
+        setLoading(true);
 
-      const found = data.find((p) => String(p.id) === String(id));
-      setProduct(found);
+        const res = await fetch(`${API}/products`);
+        const data = await res.json();
 
-      if (found?.coverImage) {
-        setActiveImage(found.coverImage);
+        console.log("URL ID:", id);
+        console.log("API DATA:", data);
+
+        const found = data.find(
+          (p) => String(p.id) === String(id) || String(p._id) === String(id)
+        );
+
+        setProduct(found || null);
+
+        if (found?.coverImage) {
+          setActiveImage(found.coverImage);
+        }
+      } catch (err) {
+        console.error("Failed to load product:", err);
+        setProduct(null);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -37,8 +52,16 @@ export default function ProductDetail() {
     return [];
   }, [product]);
 
+  if (loading) {
+    return <div>Loading product...</div>;
+  }
+
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div className="empty-state">
+        Product not found
+      </div>
+    );
   }
 
   return (
