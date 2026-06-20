@@ -82,7 +82,16 @@ export default function ProductDetail() {
           <h1>{product.title}</h1>
           <p>{formatPrice(product.price)}</p>
           <p>{product.description}</p>
-
+          <div className="gallery-thumbnails">
+            {product.galleryImages?.map((img) => (
+              <img
+                key={img}
+                src={img}
+                alt={product.title}
+                onClick={() => setActiveImage(img)}
+              />
+            ))}
+          </div>
           <Button>
             <ShoppingBag size={19} /> Add to cart
           </Button>
