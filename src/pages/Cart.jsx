@@ -1,13 +1,5 @@
-import {
-useEffect,
-useState
-}
-from 'react';
-
-import {
-getCart
-}
-from '../utils/cart.js';
+import { useEffect, useState } from 'react';
+import { getCart } from '../utils/cart.js';
 
 export default function Cart(){
 

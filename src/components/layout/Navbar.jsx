@@ -1,10 +1,5 @@
-import {
-Menu,
-ShoppingBag,
-X
-}
-from 'lucide-react';
-
+import { Menu, ShoppingBag, X } from 'lucide-react';
+import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 const navItems = [
   { label: 'Home', to: '/' },
