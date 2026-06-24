@@ -6,7 +6,7 @@ import ProductDetail from './pages/ProductDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
-
+import Success from './pages/Success.jsx';
 export default function App() {
   return (
     <Routes>
@@ -16,6 +16,7 @@ export default function App() {
         <Route path="/product/:slug" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/success" element={<Success />} />
         <Route path="*" element={<NotFound />} />
       
       </Route>
