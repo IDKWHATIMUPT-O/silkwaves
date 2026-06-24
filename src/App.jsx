@@ -13,8 +13,9 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:slug" element={<ProductDetail />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFound />} />
+        
       </Route>
     </Routes>
   );

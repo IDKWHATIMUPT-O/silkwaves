@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { formatPrice } from '../utils/currency.js';
+import { addToCart } from '../utils/cart.js';
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -92,7 +93,11 @@ export default function ProductDetail() {
               />
             ))}
           </div>
-          <Button>
+          <Button
+            onClick={() =>
+              addToCart(product)
+            }
+>
             <ShoppingBag size={19} /> Add to cart
           </Button>
         </div>

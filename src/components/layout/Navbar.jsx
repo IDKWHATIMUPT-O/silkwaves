@@ -1,7 +1,11 @@
-import { Menu, ShoppingBag, X } from 'lucide-react';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import {
+Menu,
+ShoppingBag,
+X
+}
+from 'lucide-react';
 
+import { NavLink, Link } from 'react-router-dom';
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Collections', to: '/collections' },
@@ -38,9 +42,12 @@ export default function Navbar() {
               {item.label}
             </NavLink>
           ))}
-          <button className="icon-button" type="button" aria-label="Shopping bag">
-            <ShoppingBag size={21} />
-          </button>
+          <Link
+to="/cart"
+className="icon-button"
+>
+<ShoppingBag size={21}/>
+</Link>
         </div>
       </nav>
     </header>
