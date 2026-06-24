@@ -1,5 +1,23 @@
-import { useEffect, useState } from 'react';
-import { getCart } from '../utils/cart.js';
+import {
+useEffect,
+useState
+}
+from 'react';
+
+import {
+Link
+}
+from 'react-router-dom';
+
+import {
+getCart
+}
+from '../utils/cart.js';
+
+import {
+formatPrice
+}
+from '../utils/currency.js';
 
 export default function Cart(){
 
@@ -23,7 +41,9 @@ cart.reduce(
 
 a+
 (
-b.price*
+Number(
+b.price
+)*
 b.quantity
 ),
 
@@ -33,73 +53,185 @@ b.quantity
 
 return(
 
-<div
+<section
 className="section-shell page"
 >
 
+<span
+className="eyebrow"
+
+>
+
+SHOPPING CART
+
+</span>
+
 <h1>
-Cart
+
+Your Cart
+
 </h1>
 
 {
 
-cart.map(
-(item)=>(
+cart.length===0
+
+?
+
+(
 
 <div
+className="empty-state"
+>
+
+Your cart is empty
+
+</div>
+
+)
+
+:
+
+(
+
+<>
+
+<div
+className="product-grid"
+>
+
+{
+
+cart.map(
+
+(item)=>(
+
+<article
+className="product-card"
 key={
 item.id
 }
 >
 
-<h3>
-{
+<div
+className="product-card__media"
+>
+
+<img
+
+src={
+item.coverImage
+}
+
+alt={
 item.title
 }
-</h3>
 
-<p>
+/>
+
+</div>
+
+<div
+className="product-card__content"
+>
+
+<span
+className="eyebrow"
+
+>
 
 Qty:
 {
 item.quantity
 }
 
-</p>
+</span>
+
+<h3>
+
+{
+item.title
+}
+
+</h3>
 
 <p>
 
-₹{
+{
+formatPrice(
 item.price
+)
 }
 
 </p>
 
 </div>
 
+</article>
+
 )
 
 )
 
 }
+
+</div>
+
+<div
+style={{
+
+display:
+'flex',
+
+justifyContent:
+'space-between',
+
+alignItems:
+'center',
+
+marginTop:
+'40px'
+
+}}
+
+>
 
 <h2>
 
 Total:
 
-₹{
+{
+formatPrice(
 total
+)
 }
 
 </h2>
 
-<button>
+<Link
+to="/checkout"
+>
+
+<button
+className="button"
+
+>
 
 Checkout
 
 </button>
 
+</Link>
+
 </div>
+
+</>
+
+)
+
+}
+
+</section>
 
 );
 
