@@ -145,6 +145,12 @@ localStorage.removeItem(
 'cart'
 );
 
+window.dispatchEvent(
+new Event(
+'cartUpdated'
+)
+);
+
 navigate(
 '/success'
 );
