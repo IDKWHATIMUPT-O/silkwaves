@@ -56,6 +56,9 @@ current=>({
 }
 
 async function placeOrder(){
+    console.log(
+window.Razorpay
+);
 
 setLoading(
 true
@@ -222,10 +225,18 @@ navigate(
 
 };
 
-const razor=
+if(
+!window.Razorpay
+){
 
-new window
-.Razorpay(
+throw new Error(
+'Razorpay SDK not loaded'
+);
+
+}
+
+const razor =
+new window.Razorpay(
 options
 );
 
