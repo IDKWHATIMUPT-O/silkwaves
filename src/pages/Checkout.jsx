@@ -1,21 +1,14 @@
-import {
-useState
-}
-from 'react';
-
-import {
-useNavigate
-}
-from 'react-router-dom';
-
-import {
-getCart
-}
-from '../utils/cart.js';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getCart } from '../utils/cart.js';
 
 const API =
 import.meta.env
 .VITE_API_BASE_URL;
+
+const RAZORPAY_KEY =
+import.meta.env
+.VITE_RAZORPAY_KEY_ID;
 
 export default function Checkout(){
 
@@ -70,6 +63,78 @@ true
 
 try{
 
+const total=
+
+cart.reduce(
+
+(a,b)=>
+
+a+
+(
+Number(
+b.price
+)*
+b.quantity
+),
+
+0
+
+);
+
+const payment=
+await fetch(
+
+`${API}/create-payment`,
+
+{
+
+method:
+'POST',
+
+headers:{
+'Content-Type':
+'application/json'
+},
+
+body:
+JSON.stringify({
+
+amount:
+total
+
+})
+
+}
+
+);
+
+const order=
+await payment.json();
+
+const options={
+
+key:
+RAZORPAY_KEY,
+
+amount:
+order.amount,
+
+currency:
+"INR",
+
+order_id:
+order.id,
+
+name:
+"Silkwaves",
+
+description:
+"Saree Purchase",
+
+handler:
+
+async function(){
+
 const payload={
 
 customer:
@@ -88,7 +153,7 @@ pincode:
 form.pincode,
 
 payment:
-'Pending',
+'Paid',
 
 items:
 
@@ -116,10 +181,8 @@ method:
 'POST',
 
 headers:{
-
 'Content-Type':
 'application/json'
-
 },
 
 body:
@@ -157,6 +220,19 @@ navigate(
 
 }
 
+};
+
+const razor=
+
+new window
+.Razorpay(
+options
+);
+
+razor.open();
+
+}
+
 catch(err){
 
 alert(
@@ -181,10 +257,7 @@ return(
 className="section-shell page"
 >
 
-<span
-className="eyebrow"
-
->
+<span className="eyebrow">
 
 CHECKOUT
 
@@ -264,11 +337,11 @@ loading
 
 ?
 
-'Placing...'
+'Opening Payment...'
 
 :
 
-'Place Order'
+'Pay Now'
 
 }
 
