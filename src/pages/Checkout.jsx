@@ -235,10 +235,22 @@ throw new Error(
 
 }
 
+if(
+!window.Razorpay
+){
+
+throw new Error(
+'Razorpay SDK not loaded'
+);
+
+}
+
 const razor =
 new window.Razorpay(
 options
 );
+
+razor.open();
 
 razor.open();
 
