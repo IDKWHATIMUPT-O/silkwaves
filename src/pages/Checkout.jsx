@@ -134,92 +134,75 @@ name:
 description:
 "Saree Purchase",
 
-handler:
+handler: async function () {
 
-async function(){
+  const payload = {
 
-const payload={
+    customer: form.name,
 
-customer:
-form.name,
+    phone: form.phone,
 
-phone:
-form.phone,
+    address: form.address,
 
-address:
-form.address,
+    city: form.city,
 
-city:
-form.city,
+    state: "",
 
-pincode:
-form.pincode,
+    pincode: form.pincode,
 
-payment:
-'Paid',
+    amount: total,
 
-items:
+    payment: "Paid",
 
-cart.map(
-p=>({
+    items: cart.map(p => ({
 
-productId:
-p.id,
+      productId: p.id,
 
-quantity:
-p.quantity
+      title: p.title,
 
-}))
+      price: p.price,
 
-};
+      quantity: p.quantity
 
-const res=
-await fetch(
+    }))
 
-`${API}/orders`,
+  };
 
-{
+  const res = await fetch(
 
-method:
-'POST',
+    `${API}/orders`,
 
-headers:{
-'Content-Type':
-'application/json'
-},
+    {
 
-body:
-JSON.stringify(
-payload
-)
+      method: "POST",
 
-}
+      headers: {
 
-);
+        "Content-Type": "application/json"
 
-if(
-!res.ok
-){
+      },
 
-throw new Error(
-'Order failed'
-);
+      body: JSON.stringify(payload)
 
-}
+    }
 
-localStorage.removeItem(
-'cart'
-);
+  );
 
-window.dispatchEvent(
-new Event(
-'cartUpdated'
-)
-);
+  if (!res.ok) {
 
-navigate(
-'/success'
-);
+    throw new Error("Order failed");
+
+  }
+
+  localStorage.removeItem("cart");
+
+  window.dispatchEvent(
+
+    new Event("cartUpdated")
+
+  );
+
+  navigate("/success");
 
 }
 
@@ -245,12 +228,7 @@ throw new Error(
 
 }
 
-const razor =
-new window.Razorpay(
-options
-);
-
-razor.open();
+const razor = new window.Razorpay(options);
 
 razor.open();
 
