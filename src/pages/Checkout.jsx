@@ -135,7 +135,7 @@ description:
 "Saree Purchase",
 
 handler: async function () {
-
+console.log("TOTAL =", total);
   const payload = {
 
     customer: form.name,
@@ -167,7 +167,7 @@ handler: async function () {
     }))
 
   };
-
+console.log(payload);
   const res = await fetch(
 
     `${API}/orders`,
