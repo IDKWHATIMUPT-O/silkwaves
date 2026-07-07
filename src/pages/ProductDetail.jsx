@@ -28,7 +28,7 @@ export default function ProductDetail() {
         const found = data.find(
           (p) => String(p.id) === String(id) || String(p._id) === String(id)
         );
-
+console.log("FOUND:", found);
         setProduct(found || null);
 
         if (found?.coverImage) {
@@ -94,12 +94,14 @@ export default function ProductDetail() {
             ))}
           </div>
           <Button
-            onClick={() =>
-              addToCart(product)
-            }
+  disabled={product.stock <= 0}
+  onClick={() => addToCart(product)}
 >
-            <ShoppingBag size={19} /> Add to cart
-          </Button>
+  <ShoppingBag size={19} />
+
+  {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+
+</Button>
         </div>
       </div>
     </section>

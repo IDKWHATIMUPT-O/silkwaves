@@ -7,18 +7,20 @@ import NotFound from './pages/NotFound.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Success from './pages/Success.jsx';
+import MyOrders from "./pages/MyOrders";
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/collections" element={<Collections />} />
-        <Route path="/product/:slug" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
         <Route path="*" element={<NotFound />} />
-      
+        <Route path="/success"element={<Success />}/>
+        <Route path="/my-orders"element={<MyOrders />}/>
       </Route>
     </Routes>
   );

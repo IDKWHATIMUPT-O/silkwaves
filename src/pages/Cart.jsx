@@ -10,9 +10,18 @@ Link
 from 'react-router-dom';
 
 import {
-getCart
-}
-from '../utils/cart.js';
+
+  getCart,
+
+  increaseQuantity,
+
+  decreaseQuantity,
+
+  removeFromCart,
+
+  clearCart
+
+} from "../utils/cart.js";
 
 import {
 formatPrice
@@ -33,7 +42,11 @@ getCart()
 );
 
 },[]);
+function refreshCart() {
 
+  setCart(getCart());
+
+}
 const total=
 cart.reduce(
 
@@ -135,17 +148,82 @@ item.title
 className="product-card__content"
 >
 
-<span
-className="eyebrow"
+<span className="eyebrow">
 
->
-
-Qty:
-{
-item.quantity
-}
+Qty: {item.quantity}
 
 </span>
+
+<h3>
+
+{item.title}
+
+</h3>
+
+<p>
+
+{formatPrice(item.price)}
+
+</p>
+
+<div
+style={{
+
+display:"flex",
+
+alignItems:"center",
+
+gap:"10px",
+
+marginTop:"15px"
+
+}}
+>
+
+<button
+className="button"
+onClick={()=>{
+decreaseQuantity(item.id);
+refreshCart();
+}}
+>
+
+-
+
+</button>
+
+<strong>
+
+{item.quantity}
+
+</strong>
+
+<button
+className="button"
+onClick={()=>{
+increaseQuantity(item.id);
+refreshCart();
+}}
+>
+
++
+
+</button>
+
+<button
+className="button"
+style={{marginLeft:"20px"}}
+onClick={()=>{
+removeFromCart(item.id);
+refreshCart();
+}}
+>
+
+Remove
+
+</button>
+
+</div>
 
 <h3>
 
@@ -180,33 +258,122 @@ item.price
 <div
 style={{
 
-display:
-'flex',
+marginTop:"40px",
 
-justifyContent:
-'space-between',
+borderTop:"1px solid #ddd",
 
-alignItems:
-'center',
+paddingTop:"25px"
 
-marginTop:
-'40px'
+}}
+>
+
+<div
+style={{
+
+display:"flex",
+
+justifyContent:"space-between",
+
+marginBottom:"10px"
+
+}}
+>
+
+<span>
+
+Subtotal
+
+</span>
+
+<strong>
+
+{formatPrice(total)}
+
+</strong>
+
+</div>
+
+<div
+style={{
+
+display:"flex",
+
+justifyContent:"space-between",
+
+marginBottom:"20px"
+
+}}
+>
+
+<span>
+
+Shipping
+
+</span>
+
+<strong>
+
+FREE
+
+</strong>
+
+</div>
+
+<div
+style={{
+
+display:"flex",
+
+justifyContent:"space-between",
+
+fontSize:"22px",
+
+marginBottom:"25px"
+
+}}
+>
+
+<strong>
+
+Total
+
+</strong>
+
+<strong>
+
+{formatPrice(total)}
+
+</strong>
+
+</div>
+
+<div
+style={{
+
+display:"flex",
+
+gap:"15px"
+
+}}
+>
+
+<button
+
+className="button"
+
+onClick={()=>{
+
+clearCart();
+
+refreshCart();
 
 }}
 
 >
 
-<h2>
+Clear Cart
 
-Total:
-
-{
-formatPrice(
-total
-)
-}
-
-</h2>
+</button>
 
 <Link
 to="/checkout"
@@ -214,7 +381,6 @@ to="/checkout"
 
 <button
 className="button"
-
 >
 
 Checkout
@@ -222,6 +388,8 @@ Checkout
 </button>
 
 </Link>
+
+</div>
 
 </div>
 

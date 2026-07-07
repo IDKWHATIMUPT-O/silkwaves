@@ -1,51 +1,112 @@
-import {
-Link
-}
-from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-export default function Success(){
+export default function Success() {
 
-return(
+  const orderId = localStorage.getItem("lastOrderId");
 
-<section
-className="section-shell page"
->
+  return (
 
-<span
-className="eyebrow"
+    <section className="section-shell page">
 
->
+      <div
+        style={{
+          maxWidth: "700px",
+          margin: "0 auto",
+          textAlign: "center",
+          padding: "60px 20px"
+        }}
+      >
 
-ORDER SUCCESS
+        <div
+          style={{
+            fontSize: "70px",
+            marginBottom: "20px"
+          }}
+        >
+          ✅
+        </div>
 
-</span>
+        <span className="eyebrow">
+          PAYMENT SUCCESSFUL
+        </span>
 
-<h1>
+        <h1>
+          Thank you for your order!
+        </h1>
 
-Thank you for your order
+        <p
+          style={{
+            fontSize: "18px",
+            color: "#666",
+            marginTop: "20px"
+          }}
+        >
+          Your order has been placed successfully.
+        </p>
 
-</h1>
+        {orderId && (
 
-<p>
+          <div
+            style={{
+              marginTop: "30px",
+              padding: "20px",
+              border: "1px solid #ddd",
+              borderRadius: "14px"
+            }}
+          >
 
-Your order has been received.
+            <strong>Order Number</strong>
 
-</p>
+            <h2>{orderId}</h2>
 
-<Link
-to="/collections"
->
+          </div>
 
-<button>
+        )}
 
-Continue Shopping
+        <p
+          style={{
+            marginTop: "25px"
+          }}
+        >
+          Estimated delivery:
+          <strong> 3–7 Business Days</strong>
+        </p>
 
-</button>
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            justifyContent: "center",
+            marginTop: "40px"
+          }}
+        >
 
-</Link>
+          <Link to="/collections">
 
-</section>
+            <button className="button">
 
-);
+              Continue Shopping
+
+            </button>
+
+          </Link>
+
+          <Link to="/my-orders">
+
+            <button className="button">
+
+              My Orders
+
+            </button>
+
+          </Link>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
 
 }
