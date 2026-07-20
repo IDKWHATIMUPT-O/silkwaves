@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCart } from '../utils/cart.js';
 import { formatPrice } from '../utils/currency.js';
+import { isLoggedIn } from '../services/customerAuth.js';
+import { getMe, getAddresses } from '../services/customerProfile.js';
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -60,9 +62,48 @@ export default function Checkout() {
   const [deliveryStatus, setDeliveryStatus] = useState('');
   const [checkingPincode, setCheckingPincode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState('');
+
+  useEffect(() => {
+    if (!isLoggedIn()) return;
+
+    async function loadSavedAddresses() {
+      try {
+        const [me, addresses] = await Promise.all([getMe(), getAddresses()]);
+
+        setForm((current) => ({ ...current, email: current.email || me.email || '' }));
+        setSavedAddresses(addresses);
+
+        const defaultAddress = addresses.find((addr) => addr.isDefault);
+        if (defaultAddress) {
+          applyAddress(defaultAddress);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadSavedAddresses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function update(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
+  }
+
+  function applyAddress(addr) {
+    setSelectedAddressId(addr._id);
+    setForm((current) => ({
+      ...current,
+      name: addr.name,
+      phone: addr.phone,
+      address: addr.address,
+      city: addr.city,
+      state: addr.state,
+      pincode: addr.pincode,
+    }));
+    setDeliveryStatus('');
   }
 
   async function checkPincode(pin) {
@@ -253,27 +294,53 @@ export default function Checkout() {
 
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
         <div className="grid gap-4">
+          {savedAddresses.length > 0 && (
+            <div className="grid gap-2 rounded-lg border border-line bg-ivory-soft p-4">
+              <span className="text-sm font-semibold text-muted">Use a saved address</span>
+              <div className="grid gap-2">
+                {savedAddresses.map((addr) => (
+                  <button
+                    key={addr._id}
+                    type="button"
+                    className={`rounded-md border p-3 text-left text-sm transition-colors ${
+                      selectedAddressId === addr._id
+                        ? 'border-maroon bg-ivory'
+                        : 'border-line bg-ivory hover:border-maroon'
+                    }`}
+                    onClick={() => applyAddress(addr)}
+                  >
+                    <strong>{addr.label || 'Address'}</strong> — {addr.name}, {addr.address}, {addr.city}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <input
             className={inputClasses}
             placeholder="Full Name"
+            value={form.name}
             onChange={(e) => update('name', e.target.value)}
           />
 
           <input
             className={inputClasses}
             placeholder="Email"
+            value={form.email}
             onChange={(e) => update('email', e.target.value)}
           />
 
           <input
             className={inputClasses}
             placeholder="Phone"
+            value={form.phone}
             onChange={(e) => update('phone', e.target.value)}
           />
 
           <input
             className={inputClasses}
             placeholder="Address"
+            value={form.address}
             onChange={(e) => update('address', e.target.value)}
           />
 
