@@ -9,6 +9,7 @@ import Checkout from './pages/Checkout.jsx';
 import Success from './pages/Success.jsx';
 import MyOrders from "./pages/MyOrders";
 import Login from "./pages/Login.jsx";
+import Account from "./pages/Account.jsx";
 export default function App() {
   return (
     <Routes>
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/success"element={<Success />}/>
         <Route path="/my-orders"element={<MyOrders />}/>
