@@ -16,7 +16,7 @@ export default function Collections() {
     return [...filtered].sort((a, b) => {
       if (sort === 'price-asc') return a.price - b.price;
       if (sort === 'price-desc') return b.price - a.price;
-      return a.id - b.id;
+      return 0;
     });
   }, [category, products, sort]);
 
@@ -31,17 +31,24 @@ export default function Collections() {
   }
 
   return (
-    <section className="section-shell page page--collections">
-      <div className="page-title">
-        <span className="eyebrow">Collections</span>
-        <h1>Sarees for every occasion</h1>
+    <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
+      <div className="mb-7">
+        <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Collections</span>
+        <h1 className="mt-2 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Sarees for every occasion</h1>
       </div>
 
-      <div className="toolbar" aria-label="Collection filters">
-        <div className="segmented-control">
+      <div
+        className="mb-7 flex flex-col gap-5 rounded-lg border border-line bg-ivory-soft p-[18px] md:flex-row md:items-center md:justify-between"
+        aria-label="Collection filters"
+      >
+        <div className="flex flex-wrap gap-2">
           {['All', ...categories].map((item) => (
             <button
-              className={category === item ? 'is-active' : ''}
+              className={`min-h-[42px] rounded-full border px-4 font-semibold transition-colors duration-200 ${
+                category === item
+                  ? 'border-maroon bg-maroon text-ivory'
+                  : 'border-line bg-ivory text-muted hover:border-maroon hover:text-maroon'
+              }`}
               key={item}
               type="button"
               onClick={() => updateParam('category', item)}
@@ -51,9 +58,13 @@ export default function Collections() {
           ))}
         </div>
 
-        <label className="select-field">
+        <label className="flex flex-col gap-2 text-sm font-semibold text-muted md:flex-row md:items-center">
           <span>Sort</span>
-          <select value={sort} onChange={(event) => updateParam('sort', event.target.value)}>
+          <select
+            className="min-h-[42px] rounded-md border border-line bg-ivory px-3.5 text-ink"
+            value={sort}
+            onChange={(event) => updateParam('sort', event.target.value)}
+          >
             <option value="featured">Featured</option>
             <option value="price-asc">Price low to high</option>
             <option value="price-desc">Price high to low</option>
@@ -61,8 +72,16 @@ export default function Collections() {
         </label>
       </div>
 
-      {status === 'loading' && <p className="empty-state">Loading collections...</p>}
-      {status === 'error' && <p className="empty-state">Unable to load products: {error.message}</p>}
+      {status === 'loading' && (
+        <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
+          Loading collections...
+        </p>
+      )}
+      {status === 'error' && (
+        <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
+          Unable to load products: {error.message}
+        </p>
+      )}
       {status === 'success' && <ProductGrid products={visibleProducts} />}
     </section>
   );
