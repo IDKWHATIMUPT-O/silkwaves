@@ -8,9 +8,20 @@ const categoryImages = {
 
 export default function CategoryCard({ category }) {
   return (
-    <Link className="category-card" to={`/collections?category=${encodeURIComponent(category)}`}>
-      <img src={categoryImages[category]} alt={`${category} sarees`} loading="lazy" />
-      <span>{category} Sarees</span>
+    <Link
+      className="group relative block min-h-[300px] overflow-hidden rounded-lg shadow-[0_12px_30px_rgba(32,26,21,0.1)] md:min-h-[360px]"
+      to={`/collections?category=${encodeURIComponent(category)}`}
+    >
+      <img
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        src={categoryImages[category]}
+        alt={`${category} sarees`}
+        loading="lazy"
+      />
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
+      <span className="absolute bottom-5 left-5 z-10 text-xl font-bold text-ivory">
+        {category} Sarees
+      </span>
     </Link>
   );
 }

@@ -1,5 +1,5 @@
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { formatPrice } from '../utils/currency.js';
@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -22,20 +23,17 @@ export default function ProductDetail() {
         const res = await fetch(`${API}/products`);
         const data = await res.json();
 
-        console.log("URL ID:", id);
-        console.log("API DATA:", data);
-
         const found = data.find(
           (p) => String(p.id) === String(id) || String(p._id) === String(id)
         );
-console.log("FOUND:", found);
+
         setProduct(found || null);
 
         if (found?.coverImage) {
           setActiveImage(found.coverImage);
         }
       } catch (err) {
-        console.error("Failed to load product:", err);
+        console.error('Failed to load product:', err);
         setProduct(null);
       } finally {
         setLoading(false);
@@ -47,61 +45,76 @@ console.log("FOUND:", found);
 
   const mainImage = activeImage || product?.coverImage || null;
 
-  const relatedProducts = useMemo(() => {
-    if (!product) return [];
-
-    return [];
-  }, [product]);
-
   if (loading) {
-    return <div>Loading product...</div>;
+    return (
+      <div className="mx-auto w-[min(1160px,calc(100%-32px))] py-16 text-center text-muted">
+        Loading product...
+      </div>
+    );
   }
 
   if (!product) {
     return (
-      <div className="empty-state">
-        Product not found
+      <div className="mx-auto w-[min(1160px,calc(100%-32px))] py-16">
+        <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
+          Product not found
+        </p>
       </div>
     );
   }
 
   return (
-    <section className="section-shell page">
-      <Link className="back-link" to="/collections">
+    <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
+      <Link className="mb-6 inline-flex items-center gap-2 font-bold text-maroon" to="/collections">
         <ArrowLeft size={18} /> Collections
       </Link>
 
-      <div className="product-detail">
-        <div className="gallery">
-          <div className="gallery__main">
-            {mainImage && <img src={mainImage} alt={product.title} />}
+      <div className="grid grid-cols-1 items-start gap-9 md:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] md:gap-13">
+        <div>
+          <div className="aspect-[4/5] overflow-hidden rounded-lg bg-ivory-soft shadow-soft">
+            {mainImage && <img className="h-full w-full object-cover" src={mainImage} alt={product.title} />}
           </div>
+
+          {product.galleryImages?.length > 0 && (
+            <div className="mt-3.5 grid grid-cols-4 gap-3">
+              {product.galleryImages.map((img) => (
+                <button
+                  key={img}
+                  type="button"
+                  className={`aspect-square overflow-hidden rounded-md border-2 p-0 ${
+                    activeImage === img ? 'border-maroon' : 'border-transparent'
+                  }`}
+                  onClick={() => setActiveImage(img)}
+                >
+                  <img className="h-full w-full object-cover" src={img} alt={product.title} />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="product-info">
-          <span className="eyebrow">{product.category}</span>
-          <h1>{product.title}</h1>
-          <p>{formatPrice(product.price)}</p>
-          <p>{product.description}</p>
-          <div className="gallery-thumbnails">
-            {product.galleryImages?.map((img) => (
-              <img
-                key={img}
-                src={img}
-                alt={product.title}
-                onClick={() => setActiveImage(img)}
-              />
-            ))}
-          </div>
+        <div className="md:sticky md:top-24">
+          <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">
+            {product.category}
+          </span>
+          <h1 className="my-2.5 text-[clamp(2rem,6vw,3.4rem)] font-semibold leading-tight">
+            {product.title}
+          </h1>
+          <p className="mb-5 text-2xl font-extrabold text-maroon">{formatPrice(product.price)}</p>
+          <p className="mb-7 leading-relaxed text-muted">{product.description}</p>
+
           <Button
-  disabled={product.stock <= 0}
-  onClick={() => addToCart(product)}
->
-  <ShoppingBag size={19} />
-
-  {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-
-</Button>
+            className="w-full"
+            disabled={product.stock <= 0}
+            onClick={() => {
+              addToCart(product);
+              setAdded(true);
+              window.setTimeout(() => setAdded(false), 1600);
+            }}
+          >
+            <ShoppingBag size={19} />
+            {product.stock <= 0 ? 'Out of Stock' : added ? 'Added to Cart' : 'Add to Cart'}
+          </Button>
         </div>
       </div>
     </section>
