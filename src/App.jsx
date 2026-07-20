@@ -8,6 +8,7 @@ import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Success from './pages/Success.jsx';
 import MyOrders from "./pages/MyOrders";
+import Login from "./pages/Login.jsx";
 export default function App() {
   return (
     <Routes>
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/success"element={<Success />}/>
         <Route path="/my-orders"element={<MyOrders />}/>
