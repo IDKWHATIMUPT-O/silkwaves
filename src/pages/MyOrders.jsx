@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatPrice } from '../utils/currency.js';
-
-const API = import.meta.env.VITE_API_BASE_URL;
+import { getMyOrders, isLoggedIn } from '../services/customerAuth.js';
 
 export default function MyOrders() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!isLoggedIn()) {
+      navigate('/login');
+      return;
+    }
+
     async function load() {
       try {
-        const phone = localStorage.getItem('customerPhone');
-
-        const res = await fetch(`${API}/orders?phone=${phone}`);
-        const data = await res.json();
+        const data = await getMyOrders();
         setOrders(data);
       } catch (err) {
-        console.error(err);
+        setError(err.message);
+        if (err.message.includes('Session expired')) {
+          navigate('/login');
+        }
       } finally {
         setLoading(false);
       }
     }
 
     load();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return (
@@ -38,9 +45,18 @@ export default function MyOrders() {
       <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">My Orders</span>
       <h1 className="mt-2 mb-8 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Order History</h1>
 
+      {error && (
+        <p className="mb-6 rounded-lg border border-line bg-ivory p-4 text-sm font-semibold text-red-700">
+          {error}
+        </p>
+      )}
+
       {orders.length === 0 ? (
         <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
-          No orders found.
+          No orders found.{' '}
+          <Link className="font-semibold text-maroon underline-offset-2 hover:underline" to="/collections">
+            Start shopping
+          </Link>
         </p>
       ) : (
         <div className="grid gap-6">

@@ -1,7 +1,8 @@
-import { Menu, ShoppingBag, X } from 'lucide-react';
+import { LogOut, Menu, ShoppingBag, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { getCartCount } from '../../utils/cart.js';
+import { isLoggedIn, logout } from '../../services/customerAuth.js';
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -10,8 +11,10 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     function refresh() {
@@ -21,6 +24,16 @@ export default function Navbar() {
     refresh();
     window.addEventListener('cartUpdated', refresh);
     return () => window.removeEventListener('cartUpdated', refresh);
+  }, []);
+
+  useEffect(() => {
+    function refreshAuth() {
+      setLoggedIn(isLoggedIn());
+    }
+
+    refreshAuth();
+    window.addEventListener('customerAuthChanged', refreshAuth);
+    return () => window.removeEventListener('customerAuthChanged', refreshAuth);
   }, []);
 
   return (
@@ -66,6 +79,30 @@ export default function Navbar() {
               {item.label}
             </NavLink>
           ))}
+          {loggedIn ? (
+            <button
+              type="button"
+              aria-label="Log out"
+              className="grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-maroon transition-transform duration-200 hover:-translate-y-0.5 hover:border-maroon"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+                navigate('/');
+              }}
+            >
+              <LogOut size={19} />
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              aria-label="Log in"
+              className="grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-maroon transition-transform duration-200 hover:-translate-y-0.5 hover:border-maroon"
+              onClick={() => setIsOpen(false)}
+            >
+              <User size={19} />
+            </Link>
+          )}
+
           <Link
             to="/cart"
             className="relative grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-maroon transition-transform duration-200 hover:-translate-y-0.5 hover:border-maroon"
