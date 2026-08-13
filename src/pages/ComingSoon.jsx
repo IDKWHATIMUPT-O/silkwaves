@@ -40,7 +40,7 @@ export default function ComingSoon() {
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 py-10 sm:py-16">
       {/* Rotating rangoli. aria-hidden because it carries no information. */}
       <div className="cs-rangoli" aria-hidden="true">
-        <img src="/mandala.png" alt="" className="cs-rangoli-img" />
+        <img src="/mandala.webp" alt="" className="cs-rangoli-img" />
       </div>
 
       <div className="relative flex w-full max-w-3xl flex-col items-center text-center">
@@ -51,7 +51,7 @@ export default function ComingSoon() {
             still stands on its own. */}
         {!logoFailed && (
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt=""
             className="mb-5 h-[min(24vh,11rem)] w-auto max-w-[70vw] object-contain drop-shadow-[0_14px_36px_rgba(122,31,43,0.14)]"
             onError={() => setLogoFailed(true)}
