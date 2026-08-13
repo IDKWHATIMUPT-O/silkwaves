@@ -1,12 +1,14 @@
-import { Menu, ShoppingBag, User, X } from 'lucide-react';
+import { Heart, Menu, ShoppingBag, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { getCartCount } from '../../utils/cart.js';
 import { isLoggedIn } from '../../services/customerAuth.js';
+import { getWishlist, isWishlisted } from '../../services/wishlist.js';
 
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Collections', to: '/collections' },
+  { label: 'Sale', to: '/sale' },
   { label: 'My Orders', to: '/my-orders' },
 ];
 
@@ -14,6 +16,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [wishlistCount, setWishlistCount] = useState(0);
 
   useEffect(() => {
     function refresh() {
@@ -33,6 +36,30 @@ export default function Navbar() {
     refreshAuth();
     window.addEventListener('customerAuthChanged', refreshAuth);
     return () => window.removeEventListener('customerAuthChanged', refreshAuth);
+  }, []);
+
+  useEffect(() => {
+    async function refreshWishlist() {
+      if (!isLoggedIn()) {
+        setWishlistCount(0);
+        return;
+      }
+
+      try {
+        const products = await getWishlist();
+        setWishlistCount(products.length);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    refreshWishlist();
+    window.addEventListener('wishlistUpdated', refreshWishlist);
+    window.addEventListener('customerAuthChanged', refreshWishlist);
+    return () => {
+      window.removeEventListener('wishlistUpdated', refreshWishlist);
+      window.removeEventListener('customerAuthChanged', refreshWishlist);
+    };
   }, []);
 
   return (
@@ -85,6 +112,20 @@ export default function Navbar() {
             onClick={() => setIsOpen(false)}
           >
             <User size={19} />
+          </Link>
+
+          <Link
+            to={loggedIn ? '/wishlist' : '/login'}
+            aria-label="Wishlist"
+            className="relative grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-maroon transition-transform duration-200 hover:-translate-y-0.5 hover:border-maroon"
+            onClick={() => setIsOpen(false)}
+          >
+            <Heart size={19} />
+            {wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-gold px-1 text-[10px] font-bold text-ink">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
 
           <Link
