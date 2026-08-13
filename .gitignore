@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output — Netlify builds from source, so this does not belong in git
+dist/
+
+# Local env overrides. NOTE: .env is tracked on purpose — Netlify builds from
+# source and needs VITE_API_BASE_URL at build time. Both values in it are
+# public by design (they ship inside the JS bundle). Never put a secret there.
+.env.local
+.env.*.local
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.log
