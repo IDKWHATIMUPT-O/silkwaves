@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BackgroundMusic from '../components/ui/BackgroundMusic.jsx';
 
 // Ganesh Chaturthi 2026 falls on Monday 14 September; 11:02 IST is the start of
 // the Madhyahna muhurat. The explicit +05:30 offset means the countdown lands on
@@ -38,6 +39,8 @@ export default function ComingSoon() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 py-10 sm:py-16">
+      <BackgroundMusic src="/raga.mp3" />
+
       {/* Rotating rangoli. aria-hidden because it carries no information. */}
       <div className="cs-rangoli" aria-hidden="true">
         <img src="/mandala.webp" alt="" className="cs-rangoli-img" />

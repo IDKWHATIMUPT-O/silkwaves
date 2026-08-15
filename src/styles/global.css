@@ -113,6 +113,48 @@ input {
   will-change: transform;
 }
 
+/* Sound control. Always visible: audio that a visitor cannot switch off is a
+   good way to lose them, and it doubles as the gesture that starts playback
+   when the browser blocks autoplay. */
+.cs-audio-toggle {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid rgba(201, 162, 75, 0.45);
+  border-radius: 50%;
+  background: rgba(251, 247, 241, 0.86);
+  backdrop-filter: blur(2px);
+  color: var(--color-maroon);
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.cs-audio-toggle:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-1px);
+}
+
+.cs-audio-toggle:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.cs-audio-toggle svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .cs-divider {
   width: min(18rem, 62vw);
   height: 1px;
