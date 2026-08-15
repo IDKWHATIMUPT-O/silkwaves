@@ -20,11 +20,18 @@ export default function BackgroundMusic({ src }) {
     audio.volume = VOLUME;
     let cancelled = false;
 
+    // The label follows the element's real state rather than whatever play()
+    // resolved to: a browser can resolve that promise and still refuse to make
+    // a sound, which left the button advertising music that was not playing.
+    const sync = () => setSoundOn(!audio.paused);
+    audio.addEventListener('play', sync);
+    audio.addEventListener('pause', sync);
+    sync();
+
     const start = async () => {
       try {
         await audio.play();
-        if (!cancelled) setSoundOn(true);
-        return true;
+        return !audio.paused;
       } catch {
         return false;
       }
@@ -59,6 +66,8 @@ export default function BackgroundMusic({ src }) {
     return () => {
       cancelled = true;
       detachRef.current();
+      audio.removeEventListener('play', sync);
+      audio.removeEventListener('pause', sync);
     };
   }, []);
 
@@ -73,10 +82,9 @@ export default function BackgroundMusic({ src }) {
 
     if (audio.paused) {
       audio.volume = VOLUME;
-      audio.play().then(() => setSoundOn(true)).catch(() => {});
+      audio.play().catch(() => {});
     } else {
       audio.pause();
-      setSoundOn(false);
     }
   }
 
