@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 
+// Keyed by the full category string, which is what actually gets passed in.
+// The old keys ("Type 1") never matched, so every src resolved to undefined.
+// The Type 2 image was also a dead URL returning 404.
 const categoryImages = {
-  'Type 1': 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85',
-  'Type 2': 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=900&q=85',
-  'Type 3': 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=900&q=85',
+  'Type 1 Sarees': 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85',
+  'Type 2 Sarees': 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=900&q=85',
+  'Type 3 Sarees': 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=900&q=85',
 };
 
 export default function CategoryCard({ category }) {
@@ -15,12 +18,12 @@ export default function CategoryCard({ category }) {
       <img
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         src={categoryImages[category]}
-        alt={`${category} sarees`}
+        alt=""
         loading="lazy"
       />
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
       <span className="absolute bottom-5 left-5 z-10 text-xl font-semibold text-ivory">
-        {category} Sarees
+        {category}
       </span>
     </Link>
   );
