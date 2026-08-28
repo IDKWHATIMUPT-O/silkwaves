@@ -50,7 +50,7 @@
     "description": "Featherweight tissue in undyed ivory, edged with a slim antique zari border. Sheer enough to layer, structured enough to hold a pleat.",
     "coverImage": "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85",
     "galleryImages": [],
-    "createdAt": "2026-08-15T08:05:00.000Z",
+    "createdAt": "2026-08-11T08:05:00.000Z",
     "colors": [
       "ivory",
       "gold"
@@ -69,7 +69,7 @@
     "galleryImages": [
       "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85"
     ],
-    "createdAt": "2026-08-12T16:25:00.000Z",
+    "createdAt": "2026-06-12T16:25:00.000Z",
     "colors": [
       "ruby-red",
       "gold",
@@ -89,7 +89,7 @@
     "galleryImages": [
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85"
     ],
-    "createdAt": "2026-08-10T13:00:00.000Z",
+    "createdAt": "2026-05-10T13:00:00.000Z",
     "colors": [
       "champagne",
       "ivory"
@@ -108,7 +108,7 @@
     "galleryImages": [
       "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85"
     ],
-    "createdAt": "2026-08-08T10:30:00.000Z",
+    "createdAt": "2026-04-08T10:30:00.000Z",
     "colors": [
       "indigo",
       "silver"
@@ -125,7 +125,7 @@
     "description": "Mysore crepe in saffron, silk mark certified, with a plain body and a fine gold edge. The everyday silk that still reads as an occasion.",
     "coverImage": "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85",
     "galleryImages": [],
-    "createdAt": "2026-08-05T09:45:00.000Z",
+    "createdAt": "2026-03-05T09:45:00.000Z",
     "colors": [
       "saffron",
       "gold"
@@ -144,7 +144,7 @@
     "galleryImages": [
       "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85"
     ],
-    "createdAt": "2026-08-02T14:20:00.000Z",
+    "createdAt": "2026-02-02T14:20:00.000Z",
     "colors": [
       "teal",
       "indigo"
@@ -164,7 +164,7 @@
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
       "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85"
     ],
-    "createdAt": "2026-07-29T12:10:00.000Z",
+    "createdAt": "2026-01-29T12:10:00.000Z",
     "colors": []
   }
 ]

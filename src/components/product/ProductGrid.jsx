@@ -1,13 +1,15 @@
 import ProductCard from './ProductCard.jsx';
 import useReveal from '../../hooks/useReveal.js';
 
-export default function ProductGrid({ products }) {
+// emptyMessage is a prop because the copy differs per page: 'no matches' is
+// wrong on an empty wishlist, which is why callers used to wrap this instead.
+export default function ProductGrid({ products, emptyMessage = 'No sarees match the selected filters.' }) {
   const gridRef = useReveal({ max: 12 });
 
   if (!products.length) {
     return (
       <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
-        No sarees match the selected filters.
+        {emptyMessage}
       </p>
     );
   }
