@@ -6,6 +6,17 @@ import BackgroundMusic from '../components/ui/BackgroundMusic.jsx';
 // the same instant no matter what timezone the visitor's device is set to.
 const LAUNCH_AT = new Date('2026-09-14T11:02:00+05:30');
 
+// Derived from LAUNCH_AT so the printed date can never drift out of sync with
+// what the countdown is counting towards. Both the locale and the time zone are
+// pinned on purpose: left to the viewer's own, Intl would render "September 14"
+// in the US, and for anyone west of India that instant falls on the 13th.
+const LAUNCH_DATE_TEXT = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Asia/Kolkata',
+}).format(LAUNCH_AT);
+
 const UNITS = [
   { key: 'days', label: 'Days' },
   { key: 'hours', label: 'Hours' },
@@ -43,7 +54,13 @@ export default function ComingSoon() {
 
       {/* Rotating rangoli. aria-hidden because it carries no information. */}
       <div className="cs-rangoli" aria-hidden="true">
-        <img src="/mandala.webp" alt="" className="cs-rangoli-img" />
+        <img
+          src="/mandala.webp"
+          alt=""
+          width="740"
+          height="740"
+          className="cs-rangoli-img"
+        />
       </div>
 
       <div className="relative flex w-full max-w-3xl flex-col items-center text-center">
@@ -56,13 +73,19 @@ export default function ComingSoon() {
           <img
             src="/logo.webp"
             alt=""
+            width="700"
+            height="573"
+            fetchPriority="high"
             className="mb-5 h-[min(24vh,11rem)] w-auto max-w-[70vw] object-contain drop-shadow-[0_14px_36px_rgba(122,31,43,0.14)]"
             onError={() => setLogoFailed(true)}
           />
         )}
 
         <div>
-          <h1 className="font-display text-5xl tracking-wide text-maroon sm:text-6xl">
+          <h1
+            className="text-balance font-display text-5xl tracking-wide text-maroon sm:text-6xl"
+            translate="no"
+          >
             SILK <span className="text-gold">WAVES</span>
           </h1>
           <p className="mt-3 text-[0.7rem] uppercase tracking-[0.4em] text-muted">
@@ -73,8 +96,8 @@ export default function ComingSoon() {
         <div className="cs-divider" aria-hidden="true" />
 
         {remaining.done ? (
-          <p className="font-display text-3xl text-maroon sm:text-4xl">
-            We are open. Welcome to Silk Waves.
+          <p className="text-balance font-display text-3xl text-maroon sm:text-4xl">
+            We are open. Welcome to <span translate="no">Silk Waves</span>.
           </p>
         ) : (
           <>
@@ -82,7 +105,20 @@ export default function ComingSoon() {
               Unveiling on Ganesh Chaturthi
             </p>
 
-            <div className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:gap-4">
+            {/* One clean sentence for screen readers instead of the tiles'
+                "31 Days 10 Hours" fragments, where the zero padding also reads
+                as "zero seven". Deliberately not a live region: announcing a
+                change every second would make the page unusable. Seconds are
+                left out so the sentence stays stable if it is ever re-read. */}
+            <p className="sr-only">
+              {remaining.days} days, {remaining.hours} hours and{' '}
+              {remaining.minutes} minutes until the launch on {LAUNCH_DATE_TEXT}.
+            </p>
+
+            <div
+              className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:gap-4"
+              aria-hidden="true"
+            >
               {UNITS.map(({ key, label }) => (
                 <div key={key} className="cs-tile">
                   <span className="cs-tile-value">
@@ -94,9 +130,9 @@ export default function ComingSoon() {
             </div>
 
             <p className="mt-8 font-display text-lg text-maroon-deep sm:text-xl">
-              14 September 2026
+              {LAUNCH_DATE_TEXT}
             </p>
-            <p className="mt-1 text-xs tracking-[0.18em] text-muted">
+            <p className="mt-1 text-pretty text-xs tracking-[0.18em] text-muted">
               Handwoven silk, curated for the season of new beginnings.
             </p>
           </>

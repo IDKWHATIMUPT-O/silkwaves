@@ -37,6 +37,17 @@ export default function BackgroundMusic({ src }) {
       }
     };
 
+    // Someone who has asked their system to reduce motion is asking for a
+    // calmer page, so nothing starts on its own for them. The button still
+    // works — it just has to be their decision.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return () => {
+        cancelled = true;
+        audio.removeEventListener('play', sync);
+        audio.removeEventListener('pause', sync);
+      };
+    }
+
     // Browsers refuse to start audible playback until the visitor has
     // interacted with the page, so this first attempt usually rejects. When it
     // does, wait for any gesture and start then.
@@ -94,13 +105,16 @@ export default function BackgroundMusic({ src }) {
           2.9 MB download they will never hear. */}
       <audio ref={audioRef} src={src} loop preload="none" />
 
+      {/* aria-pressed already carries on/off, so the name stays fixed. Changing
+          both meant screen readers announced the state twice, in conflicting
+          terms — "Turn music on, pressed". */}
       <button
         type="button"
         onClick={toggle}
         className="cs-audio-toggle"
         aria-pressed={soundOn}
-        aria-label={soundOn ? 'Turn music off' : 'Turn music on'}
-        title={soundOn ? 'Turn music off' : 'Turn music on'}
+        aria-label="Background music"
+        title="Background music"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M11 5 6 9H3v6h3l5 4V5z" />

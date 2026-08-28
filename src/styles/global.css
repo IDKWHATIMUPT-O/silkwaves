@@ -118,9 +118,15 @@ input {
    when the browser blocks autoplay. */
 .cs-audio-toggle {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
+  /* Clears the home indicator and any notch on phones, where this sits in
+     exactly the corner the system reserves for itself. */
+  right: calc(1.25rem + env(safe-area-inset-right, 0px));
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
   z-index: 10;
+  /* Removes the 300ms double-tap delay, and Android's default blue flash —
+     the hover and focus styles below already signal the press. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   display: grid;
   place-items: center;
   width: 2.75rem;
