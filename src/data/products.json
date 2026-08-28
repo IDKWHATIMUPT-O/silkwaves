@@ -1,75 +1,135 @@
 [
   {
-    "id": 1,
-    "title": "Pink Silk Saree",
-    "price": 6999,
-    "category": "Type 1",
-    "description": "Pure handwoven silk saree with a luminous pink body, soft zari border, and an elegant drape for festive occasions.",
-    "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
+    "_id": "65f1a2b4c8d9e01234500001",
+    "title": "Rani Pink Kanjivaram Silk",
+    "slug": "rani-pink-kanjivaram-silk",
+    "price": 18999,
+    "compareAtPrice": 24999,
+    "stock": 4,
+    "category": "Type 1 Sarees",
+    "description": "Pure mulberry silk woven in Kanchipuram, with a contrast peacock border and a broad zari pallu. The body carries a fine temple motif that catches light as it moves.",
+    "coverImage": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
       "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85",
       "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85"
     ],
-    "slug": "pink-silk-saree"
+    "createdAt": "2026-08-20T09:12:00.000Z"
   },
   {
-    "id": 2,
-    "title": "Emerald Banarasi Saree",
-    "price": 11999,
-    "category": "Type 1",
-    "description": "A deep emerald Banarasi-inspired silk saree with delicate woven motifs and a regal finish.",
-    "images": [
-      "https://images.unsplash.com/photo-1610189018566-5b7463c088f9?auto=format&fit=crop&w=1200&q=85",
+    "_id": "65f1a2b4c8d9e01234500002",
+    "title": "Emerald Banarasi Silk",
+    "slug": "emerald-banarasi-silk",
+    "price": 22499,
+    "compareAtPrice": null,
+    "stock": 12,
+    "category": "Type 1 Sarees",
+    "description": "Handloom Banarasi in deep emerald, brocaded end to end with gold jaal. Woven over six weeks on a pit loom, finished with a scalloped selvedge.",
+    "coverImage": "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
       "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85"
     ],
-    "slug": "emerald-banarasi-saree"
+    "createdAt": "2026-08-18T11:40:00.000Z"
   },
   {
-    "id": 3,
-    "title": "Ivory Tissue Saree",
-    "price": 8999,
-    "category": "Type 2",
-    "description": "Lightweight ivory tissue saree with a quiet shimmer, made for refined daytime celebrations.",
-    "images": [
-      "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1200&q=85",
+    "_id": "65f1a2b4c8d9e01234500003",
+    "title": "Ivory Tissue Saree with Zari Border",
+    "slug": "ivory-tissue-saree-zari-border",
+    "price": 12999,
+    "compareAtPrice": null,
+    "stock": 0,
+    "category": "Type 2 Sarees",
+    "description": "Featherweight tissue in undyed ivory, edged with a slim antique zari border. Sheer enough to layer, structured enough to hold a pleat.",
+    "coverImage": "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [],
+    "createdAt": "2026-08-15T08:05:00.000Z"
+  },
+  {
+    "_id": "65f1a2b4c8d9e01234500004",
+    "title": "Ruby Kanjivaram Silk",
+    "slug": "ruby-kanjivaram-silk",
+    "price": 26999,
+    "compareAtPrice": 32999,
+    "stock": 7,
+    "category": "Type 2 Sarees",
+    "description": "A bridal weight Kanjivaram in deep ruby, with a korvai border joined by hand and a pallu of solid zari. Weighs close to eight hundred grams.",
+    "coverImage": "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
       "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85"
     ],
-    "slug": "ivory-tissue-saree"
+    "createdAt": "2026-08-12T16:25:00.000Z"
   },
   {
-    "id": 4,
-    "title": "Ruby Kanjivaram Saree",
-    "price": 14999,
-    "category": "Type 2",
-    "description": "Heritage Kanjivaram-style saree in rich ruby silk with a structured border and heirloom presence.",
-    "images": [
-      "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1610189018566-5b7463c088f9?auto=format&fit=crop&w=1200&q=85"
-    ],
-    "slug": "ruby-kanjivaram-saree"
-  },
-  {
-    "id": 5,
+    "_id": "65f1a2b4c8d9e01234500005",
     "title": "Champagne Organza Saree",
-    "price": 7999,
-    "category": "Type 3",
-    "description": "Airy champagne organza saree with tonal embroidery and a graceful modern silhouette.",
-    "images": [
-      "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85"
-    ],
-    "slug": "champagne-organza-saree"
-  },
-  {
-    "id": 6,
-    "title": "Midnight Georgette Saree",
-    "price": 5999,
-    "category": "Type 3",
-    "description": "Fluid midnight georgette saree with subtle beadwork for evening wear and destination events.",
-    "images": [
-      "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85",
+    "slug": "champagne-organza-saree",
+    "price": 9499,
+    "compareAtPrice": null,
+    "stock": 20,
+    "category": "Type 3 Sarees",
+    "description": "Crisp silk organza in a warm champagne, scattered with hand embroidered sequin buttis. Light on the shoulder through a long evening.",
+    "coverImage": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85"
     ],
-    "slug": "midnight-georgette-saree"
+    "createdAt": "2026-08-10T13:00:00.000Z"
+  },
+  {
+    "_id": "65f1a2b4c8d9e01234500006",
+    "title": "Midnight Georgette Saree",
+    "slug": "midnight-georgette-saree",
+    "price": 8999,
+    "compareAtPrice": 11499,
+    "stock": 3,
+    "category": "Type 3 Sarees",
+    "description": "Fluid georgette in midnight blue with a narrow silver border. Falls in close pleats and travels well, which makes it a reliable evening choice.",
+    "coverImage": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "createdAt": "2026-08-08T10:30:00.000Z"
+  },
+  {
+    "_id": "65f1a2b4c8d9e01234500007",
+    "title": "Saffron Mysore Crepe Silk",
+    "slug": "saffron-mysore-crepe-silk",
+    "price": 7499,
+    "compareAtPrice": null,
+    "stock": 15,
+    "category": "Type 1 Sarees",
+    "description": "Mysore crepe in saffron, silk mark certified, with a plain body and a fine gold edge. The everyday silk that still reads as an occasion.",
+    "coverImage": "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [],
+    "createdAt": "2026-08-05T09:45:00.000Z"
+  },
+  {
+    "_id": "65f1a2b4c8d9e01234500008",
+    "title": "Peacock Blue Chanderi",
+    "slug": "peacock-blue-chanderi",
+    "price": 14999,
+    "compareAtPrice": null,
+    "stock": 9,
+    "category": "Type 2 Sarees",
+    "description": "Chanderi silk cotton in peacock blue, with woven nakshi butis across the body and a sheer, glassy finish typical of the weave.",
+    "coverImage": "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "createdAt": "2026-08-02T14:20:00.000Z"
+  },
+  {
+    "_id": "65f1a2b4c8d9e01234500009",
+    "title": "Old Rose Tussar Silk",
+    "slug": "old-rose-tussar-silk",
+    "price": 16499,
+    "compareAtPrice": 19999,
+    "stock": 6,
+    "category": "Type 3 Sarees",
+    "description": "Wild tussar in a muted old rose, block printed at the pallu in madder and iron black. The slub in the yarn is the weave, not a flaw.",
+    "coverImage": "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "createdAt": "2026-07-29T12:10:00.000Z"
   }
 ]
