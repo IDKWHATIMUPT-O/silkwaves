@@ -129,6 +129,61 @@ input {
 }
 
 /* ---------------------------------------------------------------------------
+   Sale motif
+   A gold-on-maroon wax seal, replacing a stock-red pill that was the only
+   off-palette element on the browsing surface. It reuses the same inner top
+   highlight as the glass panels, so badge and surfaces share one light source.
+--------------------------------------------------------------------------- */
+
+.sale-seal {
+  position: relative;
+  /* Contains the scalloped rim's negative z-index, so it can sit behind the
+     disc without falling behind the card underneath. */
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-sale);
+  color: var(--color-sale-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 6px 16px rgba(32, 26, 21, 0.28);
+}
+
+/* The scalloped edge of the seal. */
+.sale-seal::before {
+  content: "";
+  position: absolute;
+  inset: -0.3rem;
+  z-index: -1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--color-sale) 0deg 10deg,
+    transparent 10deg 20deg
+  );
+}
+
+/* Hairline gold ring, the way a struck seal catches light at its rim. */
+.sale-seal::after {
+  content: "";
+  position: absolute;
+  inset: 0.28rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-sale-edge);
+  pointer-events: none;
+}
+
+/* Horizontal variant for price rows, notched on the leading edge. */
+.sale-ribbon {
+  clip-path: polygon(0.5rem 0, 100% 0, 100% 100%, 0.5rem 100%, 0 50%);
+  padding-left: 1rem;
+  background: var(--color-sale);
+  color: var(--color-sale-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ---------------------------------------------------------------------------
    Coming-soon / countdown page
    The rangoli rotates behind the logo and the countdown. The reduced-motion
    rule above already freezes it for visitors who ask for that, and it stays

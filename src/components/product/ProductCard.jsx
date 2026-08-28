@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Eye, Heart } from 'lucide-react';
 import { formatPrice } from '../../utils/currency.js';
+import { getDiscount } from '../../utils/pricing.js';
+import SaleBadge from '../ui/SaleBadge.jsx';
 import { isLoggedIn } from '../../services/customerAuth.js';
 import { initWishlist, isWishlisted, addToWishlist, removeFromWishlist } from '../../services/wishlist.js';
 import QuickViewModal from './QuickViewModal.jsx';
@@ -20,10 +22,7 @@ export default function ProductCard({ product }) {
   const [wishlistBusy, setWishlistBusy] = useState(false);
   const intervalRef = useRef(null);
 
-  const hasDiscount = product.compareAtPrice > product.price;
-  const discountPercent = hasDiscount
-    ? Math.round((1 - product.price / product.compareAtPrice) * 100)
-    : 0;
+  const { hasDiscount, percent: discountPercent } = getDiscount(product);
 
   useEffect(() => {
     initWishlist();
@@ -99,11 +98,8 @@ export default function ProductCard({ product }) {
           />
         ))}
 
-        {hasDiscount && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-red-700 px-2.5 py-1 text-[0.72rem] font-semibold text-white">
-            -{discountPercent}%
-          </span>
-        )}
+        {/* SaleBadge returns null below 1%, so no conditional is needed here. */}
+        <SaleBadge percent={discountPercent} className="absolute left-3 top-3 z-10" />
 
         {hasSlideshow && (
           <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
@@ -169,9 +165,9 @@ export default function ProductCard({ product }) {
         </p>
 
         {product.stock <= 0 ? (
-          <span className="mt-1 inline-block text-sm font-semibold text-red-700">Out of Stock</span>
+          <span className="mt-1 inline-block text-meta font-medium text-stock-out">Out of Stock</span>
         ) : product.stock <= 5 ? (
-          <span className="mt-1 inline-block text-sm font-semibold text-amber-700">
+          <span className="mt-1 inline-block text-meta font-medium text-stock-low">
             Only {product.stock} left
           </span>
         ) : null}

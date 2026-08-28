@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 import ProductGrid from '../components/product/ProductGrid.jsx';
 import useProducts from '../hooks/useProducts.js';
+import { isOnSale } from '../utils/pricing.js';
 
 export default function Sale() {
   const { products, status, error } = useProducts();
 
   const saleProducts = useMemo(
-    () => products.filter((product) => product.compareAtPrice > product.price),
+    () => products.filter(isOnSale),
     [products]
   );
 

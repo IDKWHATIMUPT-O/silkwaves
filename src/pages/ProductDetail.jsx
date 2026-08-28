@@ -5,6 +5,8 @@ import Button from '../components/ui/Button.jsx';
 import { formatPrice } from '../utils/currency.js';
 import { addToCart } from '../utils/cart.js';
 import { getProducts } from '../services/productService.js';
+import { getDiscount } from '../utils/pricing.js';
+import SaleBadge from '../components/ui/SaleBadge.jsx';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -46,6 +48,7 @@ export default function ProductDetail() {
   }, [id]);
 
   const mainImage = activeImage || product?.coverImage || null;
+  const discount = getDiscount(product);
 
   if (loading) {
     return (
@@ -102,7 +105,22 @@ export default function ProductDetail() {
           <h1 className="my-2.5 text-h1 leading-tight">
             {product.title}
           </h1>
-          <p className="mb-5 text-2xl font-semibold tabular-nums text-maroon">{formatPrice(product.price)}</p>
+          {/* This page showed only the current price — a saree reading -24% on
+              its card arrived here with no discount visible at all. */}
+          <div className="mb-5 flex flex-wrap items-center gap-3">
+            <p className="m-0 text-2xl font-semibold tabular-nums text-maroon">
+              {formatPrice(product.price)}
+            </p>
+            {discount.hasDiscount && (
+              <>
+                <p className="m-0 text-lg tabular-nums text-muted line-through">
+                  {formatPrice(discount.compareAt)}
+                </p>
+                <SaleBadge percent={discount.percent} variant="ribbon" />
+                <SaleBadge percent={discount.percent} saved={discount.saved} variant="inline" />
+              </>
+            )}
+          </div>
           <p className="mb-7 leading-relaxed text-muted">{product.description}</p>
 
           <Button
