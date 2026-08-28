@@ -7,6 +7,7 @@ import SaleBadge from '../ui/SaleBadge.jsx';
 import { isLoggedIn } from '../../services/customerAuth.js';
 import { initWishlist, isWishlisted, addToWishlist, removeFromWishlist } from '../../services/wishlist.js';
 import QuickViewModal from './QuickViewModal.jsx';
+import GalleryDots from './GalleryDots.jsx';
 
 const SLIDE_INTERVAL_MS = 900;
 
@@ -82,10 +83,12 @@ export default function ProductCard({ product }) {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
     >
-      <Link
-        className="relative block aspect-[4/5] overflow-hidden bg-ivory-soft"
-        to={`/product/${product._id}`}
-      >
+      {/* The media area is a plain container. The link is a sibling stretched
+          across it, and the action buttons sit above that link as siblings
+          rather than inside it: nesting buttons within an anchor is invalid
+          interactive-in-interactive markup that only held together because
+          every handler called preventDefault and stopPropagation. */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-ivory-soft">
         {images.map((src, index) => (
           <img
             key={src + index}
@@ -99,22 +102,23 @@ export default function ProductCard({ product }) {
         ))}
 
         {/* SaleBadge returns null below 1%, so no conditional is needed here. */}
-        <SaleBadge percent={discountPercent} className="absolute left-3 top-3 z-10" />
+        <SaleBadge percent={discountPercent} className="absolute left-3 top-3 z-20" />
 
-        {hasSlideshow && (
-          <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
-            {images.map((src, index) => (
-              <span
-                key={src + index}
-                className={`h-1.5 w-1.5 rounded-full transition-colors duration-200 ${
-                  index === activeIndex ? 'bg-ivory' : 'bg-ivory/50'
-                }`}
-              />
-            ))}
-          </div>
-        )}
+        <GalleryDots
+          count={images.length}
+          activeIndex={activeIndex}
+          className="absolute inset-x-0 bottom-2 z-20"
+        />
 
-        <div className="absolute right-3 top-3 z-10 flex translate-y-1 flex-col gap-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+        <Link
+          className="absolute inset-0 z-0"
+          to={`/product/${product._id}`}
+          aria-label={product.title}
+        />
+
+        {/* group-focus-within is what makes these reachable at all: with only
+            group-hover they were invisible AND untabbable for keyboard users. */}
+        <div className="absolute right-3 top-3 z-20 flex translate-y-1 flex-col gap-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
           <button
             type="button"
             aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
@@ -133,16 +137,12 @@ export default function ProductCard({ product }) {
             type="button"
             aria-label="Quick view"
             className="grid h-9 w-9 place-items-center rounded-full border border-white/50 bg-ivory/70 text-ink backdrop-blur-md transition-all duration-200 hover:border-maroon hover:text-maroon"
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              setIsQuickViewOpen(true);
-            }}
+            onClick={() => setIsQuickViewOpen(true)}
           >
             <Eye size={17} />
           </button>
         </div>
-      </Link>
+      </div>
 
       {isQuickViewOpen && (
         <QuickViewModal product={product} onClose={() => setIsQuickViewOpen(false)} />
