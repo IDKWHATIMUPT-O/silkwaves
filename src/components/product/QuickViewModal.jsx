@@ -144,13 +144,13 @@ export default function QuickViewModal({ product, onClose }) {
         </div>
 
         <div className="flex flex-col gap-3 p-6">
-          <span className="text-[0.72rem] font-bold uppercase tracking-widest text-maroon">
+          <span className="eyebrow">
             {product.category}
           </span>
 
           <h2 className="m-0 text-2xl font-semibold leading-snug">{product.title}</h2>
 
-          <p className="m-0 text-xl font-bold text-maroon">{formatPrice(product.price)}</p>
+          <p className="m-0 text-xl font-semibold tabular-nums text-maroon">{formatPrice(product.price)}</p>
 
           {product.description && (
             <p className="m-0 line-clamp-4 text-sm leading-relaxed text-muted">{product.description}</p>

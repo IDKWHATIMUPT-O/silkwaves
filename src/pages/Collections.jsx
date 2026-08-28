@@ -33,8 +33,8 @@ export default function Collections() {
   return (
     <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
       <div className="mb-7">
-        <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Collections</span>
-        <h1 className="mt-2 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Sarees for every occasion</h1>
+        <span className="eyebrow">Collections</span>
+        <h1 className="mt-2 text-h1">Sarees for every occasion</h1>
       </div>
 
       <div

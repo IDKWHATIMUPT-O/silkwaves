@@ -4,8 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { formatPrice } from '../utils/currency.js';
 import { addToCart } from '../utils/cart.js';
-
-const API = import.meta.env.VITE_API_BASE_URL;
+import { getProducts } from '../services/productService.js';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -20,8 +19,11 @@ export default function ProductDetail() {
       try {
         setLoading(true);
 
-        const res = await fetch(`${API}/products`);
-        const data = await res.json();
+        // Goes through productService rather than fetching directly, so this
+        // page honours the local fixture like every other product surface. It
+        // was fetching `${API}/products` with API empty, which returned the SPA
+        // shell and made every product page render "Product not found".
+        const data = await getProducts();
 
         const found = data.find(
           (p) => String(p.id) === String(id) || String(p._id) === String(id)
@@ -65,7 +67,7 @@ export default function ProductDetail() {
 
   return (
     <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
-      <Link className="mb-6 inline-flex items-center gap-2 font-bold text-maroon" to="/collections">
+      <Link className="mb-6 inline-flex items-center gap-2 font-semibold text-maroon" to="/collections">
         <ArrowLeft size={18} /> Collections
       </Link>
 
@@ -94,13 +96,13 @@ export default function ProductDetail() {
         </div>
 
         <div className="md:sticky md:top-24">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">
+          <span className="eyebrow">
             {product.category}
           </span>
-          <h1 className="my-2.5 text-[clamp(2rem,6vw,3.4rem)] font-semibold leading-tight">
+          <h1 className="my-2.5 text-h1 leading-tight">
             {product.title}
           </h1>
-          <p className="mb-5 text-2xl font-extrabold text-maroon">{formatPrice(product.price)}</p>
+          <p className="mb-5 text-2xl font-semibold tabular-nums text-maroon">{formatPrice(product.price)}</p>
           <p className="mb-7 leading-relaxed text-muted">{product.description}</p>
 
           <Button

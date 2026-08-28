@@ -289,8 +289,8 @@ export default function Checkout() {
 
   return (
     <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
-      <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Checkout</span>
-      <h1 className="mt-2 mb-8 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Complete Order</h1>
+      <span className="eyebrow">Checkout</span>
+      <h1 className="mt-2 mb-8 text-h1">Complete Order</h1>
 
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
         <div className="grid gap-4">
@@ -376,7 +376,7 @@ export default function Checkout() {
                 <br />
                 Qty: {item.quantity}
               </div>
-              <div>{formatPrice(Number(item.price) * item.quantity)}</div>
+              <div className="tabular-nums">{formatPrice(Number(item.price) * item.quantity)}</div>
             </div>
           ))}
 
@@ -384,7 +384,7 @@ export default function Checkout() {
 
           <div className="mb-2 flex justify-between">
             <strong>Subtotal</strong>
-            <strong>{formatPrice(total)}</strong>
+            <strong className="tabular-nums">{formatPrice(total)}</strong>
           </div>
 
           <div className="mb-2 flex justify-between">
@@ -396,7 +396,7 @@ export default function Checkout() {
 
           <div className="mb-2 flex justify-between text-xl">
             <strong>Total</strong>
-            <strong className="text-maroon">{formatPrice(total)}</strong>
+            <strong className="tabular-nums text-maroon">{formatPrice(total)}</strong>
           </div>
         </div>
       </div>

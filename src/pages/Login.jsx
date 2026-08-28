@@ -62,8 +62,8 @@ export default function Login() {
 
   return (
     <section className="mx-auto w-[min(480px,calc(100%-32px))] py-14 md:py-20">
-      <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Account</span>
-      <h1 className="mt-2 mb-8 text-[clamp(2rem,5vw,2.6rem)] font-semibold">
+      <span className="eyebrow">Account</span>
+      <h1 className="mt-2 mb-8 text-h2">
         {step === 'phone' ? 'Log in to your account' : 'Enter your code'}
       </h1>
 

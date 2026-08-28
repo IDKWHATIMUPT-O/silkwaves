@@ -11,10 +11,62 @@
   --color-gold-soft: #e4cd93;
   --color-line: rgba(32, 26, 21, 0.12);
 
-  --font-display: "Marcellus", "Georgia", serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  /* Cormorant Garamond carries real weights (unlike the single-weight face it
+     replaces), so weight classes on headings finally do something. */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", system-ui, sans-serif;
+
+  /* One type scale, replacing seven ad-hoc clamp() values scattered across the
+     pages. Line heights ride along as Tailwind v4 companion tokens. */
+  --text-display: clamp(3.2rem, 12vw, 6.5rem);
+  --text-display--line-height: 0.95;
+  --text-h1: clamp(2rem, 5vw, 3.2rem);
+  --text-h1--line-height: 1.08;
+  --text-h2: clamp(1.6rem, 4vw, 2.4rem);
+  --text-h2--line-height: 1.15;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.3;
+  --text-lead: clamp(1rem, 2vw, 1.17rem);
+  --text-lead--line-height: 1.65;
+  --text-eyebrow: 0.72rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.45;
+
+  /* Deliberately a NEW namespace. Tailwind v4 already ships --radius-sm/md/lg
+     and --blur-*; redefining those would silently restyle every existing
+     rounded-lg in the app. */
+  --radius-control: 0.625rem;
+  --radius-card: 0.875rem;
+  --radius-panel: 1.25rem;
+  --radius-pill: 999px;
+
+  /* Restrained glass: translucent ivory, a light rim, and ONE inner top
+     highlight. That single inset line is the whole skeuomorphic gesture —
+     no texture, no bevel, no emboss. */
+  --color-glass: rgba(251, 247, 241, 0.58);
+  --color-glass-strong: rgba(251, 247, 241, 0.8);
+  --color-glass-edge: rgba(255, 255, 255, 0.55);
+  --blur-glass: 16px;
+  --blur-glass-lg: 24px;
 
   --shadow-soft: 0 18px 48px rgba(32, 26, 21, 0.12);
+  --shadow-glass:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(32, 26, 21, 0.05),
+    0 16px 40px rgba(32, 26, 21, 0.1);
+  --shadow-raised:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 2px rgba(32, 26, 21, 0.06),
+    0 10px 24px rgba(32, 26, 21, 0.07);
+
+  /* Status colours, so the sale badge and stock notices stop reaching for
+     Tailwind's stock red/amber and finally sit inside the palette. */
+  --color-sale: var(--color-maroon-deep);
+  --color-sale-ink: var(--color-gold-soft);
+  --color-sale-edge: rgba(201, 162, 75, 0.55);
+  --color-stock-out: var(--color-maroon-deep);
+  --color-stock-low: #8a6a2b;
 }
 
 * {
@@ -30,6 +82,24 @@ body {
   background: var(--color-ivory);
   color: var(--color-ink);
   font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* One eyebrow, replacing two near-identical recipes that had drifted apart
+   (text-xs/font-extrabold in 14 places, text-[0.72rem]/font-bold in 4). */
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-maroon);
 }
 
 img {

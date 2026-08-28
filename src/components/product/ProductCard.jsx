@@ -100,7 +100,7 @@ export default function ProductCard({ product }) {
         ))}
 
         {hasDiscount && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-red-700 px-2.5 py-1 text-[0.72rem] font-bold text-white">
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-red-700 px-2.5 py-1 text-[0.72rem] font-semibold text-white">
             -{discountPercent}%
           </span>
         )}
@@ -153,7 +153,7 @@ export default function ProductCard({ product }) {
       )}
 
       <div className="p-[18px]">
-        <span className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-widest text-maroon">
+        <span className="inline-flex items-center gap-2 eyebrow">
           {product.category}
         </span>
 
@@ -162,9 +162,9 @@ export default function ProductCard({ product }) {
         </h3>
 
         <p className="m-0 flex items-baseline gap-2">
-          <span className="font-bold text-maroon">{formatPrice(product.price)}</span>
+          <span className="font-semibold tabular-nums text-maroon">{formatPrice(product.price)}</span>
           {hasDiscount && (
-            <span className="text-sm text-muted line-through">{formatPrice(product.compareAtPrice)}</span>
+            <span className="text-sm tabular-nums text-muted line-through">{formatPrice(product.compareAtPrice)}</span>
           )}
         </p>
 

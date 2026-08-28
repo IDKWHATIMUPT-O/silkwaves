@@ -35,13 +35,13 @@ export default function Home() {
           className="mx-auto grid min-h-[calc(100vh-76px)] w-[min(1160px,calc(100%-32px))] items-center gap-10 py-12 md:grid-cols-[minmax(0,0.9fr)_minmax(320px,1.1fr)] md:gap-14"
         >
           <div className="max-w-[590px]" data-reveal>
-            <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-maroon">
+            <span className="inline-flex items-center gap-2 eyebrow">
               <Sparkles size={18} /> Handpicked luxury sarees
             </span>
-            <h1 className="font-display mt-4 mb-2 text-[clamp(3.2rem,12vw,6.5rem)] leading-[0.95] text-maroon">
+            <h1 className="font-display mt-4 mb-2 text-display leading-[0.95] text-maroon">
               SILKWAVES
             </h1>
-            <p className="max-w-[560px] text-[clamp(1rem,2vw,1.17rem)] leading-relaxed text-muted">
+            <p className="max-w-[560px] text-lead leading-relaxed text-muted">
               Elegant sarees selected for weddings, festive evenings, and every moment that
               deserves a softer kind of grandeur.
             </p>
@@ -69,10 +69,10 @@ export default function Home() {
 
       <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-16 md:py-22">
         <div className="mb-7">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">
+          <span className="eyebrow">
             Curated edits
           </span>
-          <h2 className="mt-2 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Shop by category</h2>
+          <h2 className="mt-2 text-h1">Shop by category</h2>
         </div>
         <div ref={categoryGridRef} className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
@@ -85,10 +85,10 @@ export default function Home() {
         <div className="mx-auto w-[min(1160px,calc(100%-32px))]">
           <div className="mb-7 flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">
+              <span className="eyebrow">
                 Featured
               </span>
-              <h2 className="mt-2 text-[clamp(2rem,5vw,3.2rem)] font-semibold">New arrivals</h2>
+              <h2 className="mt-2 text-h1">New arrivals</h2>
             </div>
             <Button to="/collections" variant="secondary">
               View all <ArrowRight size={18} />

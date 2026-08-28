@@ -9,11 +9,11 @@ export default function Success() {
       <div className="mx-auto max-w-[700px] px-5 py-14 text-center">
         <CheckCircle2 className="mx-auto mb-5 text-maroon" size={64} strokeWidth={1.5} />
 
-        <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">
+        <span className="eyebrow">
           Payment Successful
         </span>
 
-        <h1 className="mt-3 text-[clamp(2rem,5vw,3rem)] font-semibold">Thank you for your order!</h1>
+        <h1 className="mt-3 text-h1">Thank you for your order!</h1>
 
         <p className="mt-5 text-lg text-muted">Your order has been placed successfully.</p>
 

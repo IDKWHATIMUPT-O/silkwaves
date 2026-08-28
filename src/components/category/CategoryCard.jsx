@@ -19,7 +19,7 @@ export default function CategoryCard({ category }) {
         loading="lazy"
       />
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
-      <span className="absolute bottom-5 left-5 z-10 text-xl font-bold text-ivory">
+      <span className="absolute bottom-5 left-5 z-10 text-xl font-semibold text-ivory">
         {category} Sarees
       </span>
     </Link>

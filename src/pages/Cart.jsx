@@ -24,8 +24,8 @@ export default function Cart() {
 
   return (
     <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
-      <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Shopping Cart</span>
-      <h1 className="mt-2 mb-7 text-[clamp(2rem,5vw,3.2rem)] font-semibold">Your Cart</h1>
+      <span className="eyebrow">Shopping Cart</span>
+      <h1 className="mt-2 mb-7 text-h1">Your Cart</h1>
 
       {cart.length === 0 ? (
         <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
@@ -44,15 +44,15 @@ export default function Cart() {
                 </div>
 
                 <div className="p-[18px]">
-                  <span className="text-[0.72rem] font-bold uppercase tracking-widest text-maroon">
+                  <span className="eyebrow">
                     Qty: {item.quantity}
                   </span>
                   <h3 className="my-2 text-lg leading-snug">{item.title}</h3>
-                  <p className="m-0 font-bold text-maroon">{formatPrice(item.price)}</p>
+                  <p className="m-0 font-semibold tabular-nums text-maroon">{formatPrice(item.price)}</p>
 
                   <div className="mt-4 flex items-center gap-2.5">
                     <button
-                      className="min-h-9 min-w-9 rounded-md border border-line bg-ivory font-bold text-ink transition-colors hover:border-maroon"
+                      className="min-h-9 min-w-9 rounded-md border border-line bg-ivory font-semibold text-ink transition-colors hover:border-maroon"
                       onClick={() => {
                         decreaseQuantity(item.id);
                         refreshCart();
@@ -62,7 +62,7 @@ export default function Cart() {
                     </button>
                     <strong>{item.quantity}</strong>
                     <button
-                      className="min-h-9 min-w-9 rounded-md border border-line bg-ivory font-bold text-ink transition-colors hover:border-maroon"
+                      className="min-h-9 min-w-9 rounded-md border border-line bg-ivory font-semibold text-ink transition-colors hover:border-maroon"
                       onClick={() => {
                         increaseQuantity(item.id);
                         refreshCart();
@@ -88,7 +88,7 @@ export default function Cart() {
           <div className="mt-10 border-t border-line pt-6">
             <div className="mb-2.5 flex justify-between">
               <span className="text-muted">Subtotal</span>
-              <strong>{formatPrice(total)}</strong>
+              <strong className="tabular-nums">{formatPrice(total)}</strong>
             </div>
             <div className="mb-5 flex justify-between">
               <span className="text-muted">Shipping</span>
@@ -96,7 +96,7 @@ export default function Cart() {
             </div>
             <div className="mb-6 flex justify-between text-xl">
               <strong>Total</strong>
-              <strong className="text-maroon">{formatPrice(total)}</strong>
+              <strong className="tabular-nums text-maroon">{formatPrice(total)}</strong>
             </div>
 
             <div className="flex flex-col gap-3.5 sm:flex-row">

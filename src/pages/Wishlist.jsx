@@ -50,8 +50,8 @@ export default function Wishlist() {
 
   return (
     <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-14 md:py-16">
-      <span className="text-xs font-extrabold uppercase tracking-widest text-maroon">Saved</span>
-      <h1 className="mt-2 mb-8 text-[clamp(2rem,5vw,3.2rem)] font-semibold">My Wishlist</h1>
+      <span className="eyebrow">Saved</span>
+      <h1 className="mt-2 mb-8 text-h1">My Wishlist</h1>
 
       {error && (
         <p className="mb-6 rounded-lg border border-line bg-ivory p-4 text-sm font-semibold text-red-700">

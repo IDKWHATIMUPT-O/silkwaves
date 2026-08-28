@@ -122,7 +122,7 @@ export default function Navbar() {
           >
             <Heart size={19} />
             {wishlistCount > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-gold px-1 text-[10px] font-bold text-ink">
+              <span className="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-gold px-1 text-[10px] font-semibold text-ink">
                 {wishlistCount}
               </span>
             )}
@@ -135,7 +135,7 @@ export default function Navbar() {
           >
             <ShoppingBag size={20} />
             {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-gold px-1 text-[10px] font-bold text-ink">
+              <span className="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-gold px-1 text-[10px] font-semibold text-ink">
                 {cartCount}
               </span>
             )}
