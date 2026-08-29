@@ -17,7 +17,7 @@ export default function ProductGrid({ products, emptyMessage = 'No sarees match 
   return (
     <div
       ref={gridRef}
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-7 lg:grid-cols-3 lg:gap-y-14"
     >
       {products.map((product) => (
         <ProductCard key={product._id} product={product} />

@@ -23,7 +23,8 @@ export default function ProductCard({ product }) {
   const [wishlistBusy, setWishlistBusy] = useState(false);
   const intervalRef = useRef(null);
 
-  const { hasDiscount, percent: discountPercent } = getDiscount(product);
+  const { hasDiscount, percent: discountPercent, compareAt } = getDiscount(product);
+  const stock = Number(product.stock);
 
   useEffect(() => {
     initWishlist();
@@ -53,6 +54,7 @@ export default function ProductCard({ product }) {
   }
 
   async function toggleWishlist(event) {
+    // Layered over the stretched link, so the click must not reach it.
     event.preventDefault();
     event.stopPropagation();
 
@@ -77,22 +79,26 @@ export default function ProductCard({ product }) {
     }
   }
 
+  const actionButton =
+    'grid h-9 w-9 place-items-center rounded-pill border backdrop-blur-md transition-colors duration-200 ' +
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
+
   return (
+    // Editorial: no card chrome at all. The photograph is the object and the
+    // type sits on the page beneath it, so nothing competes with the garment.
     <article
-      className="group overflow-hidden rounded-lg border border-line bg-ivory shadow-[0_12px_28px_rgba(32,26,21,0.06)] transition-all duration-200 hover:-translate-y-1 hover:shadow-soft"
+      className="group"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
     >
-      {/* The media area is a plain container. The link is a sibling stretched
-          across it, and the action buttons sit above that link as siblings
-          rather than inside it: nesting buttons within an anchor is invalid
-          interactive-in-interactive markup that only held together because
-          every handler called preventDefault and stopPropagation. */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-ivory-soft">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-card bg-ivory-soft">
+        {/* Hover scales the image rather than lifting the article: useReveal
+            leaves an inline transform on every grid child, and that outranks a
+            Tailwind translate on the same element. */}
         {images.map((src, index) => (
           <img
             key={src + index}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
+            className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-[1.04] ${
               index === activeIndex ? 'opacity-100' : 'opacity-0'
             }`}
             src={src}
@@ -101,14 +107,7 @@ export default function ProductCard({ product }) {
           />
         ))}
 
-        {/* SaleBadge returns null below 1%, so no conditional is needed here. */}
         <SaleBadge percent={discountPercent} className="absolute left-3 top-3 z-20" />
-
-        <GalleryDots
-          count={images.length}
-          activeIndex={activeIndex}
-          className="absolute inset-x-0 bottom-2 z-20"
-        />
 
         <Link
           className="absolute inset-0 z-0"
@@ -116,59 +115,67 @@ export default function ProductCard({ product }) {
           aria-label={product.title}
         />
 
-        {/* group-focus-within is what makes these reachable at all: with only
-            group-hover they were invisible AND untabbable for keyboard users. */}
-        <div className="absolute right-3 top-3 z-20 flex translate-y-1 flex-col gap-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <div className="absolute right-3 top-3 z-20 flex translate-y-1 flex-col gap-2 opacity-0 transition-all duration-200 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100">
           <button
             type="button"
             aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
             disabled={wishlistBusy}
-            className={`grid h-9 w-9 place-items-center rounded-full border backdrop-blur-md transition-all duration-200 ${
+            className={`${actionButton} ${
               wishlisted
                 ? 'border-maroon bg-maroon text-ivory'
-                : 'border-white/50 bg-ivory/70 text-ink hover:border-maroon hover:text-maroon'
+                : 'border-glass-edge bg-glass-strong text-ink hover:border-maroon hover:text-maroon'
             }`}
             onClick={toggleWishlist}
           >
-            <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} />
+            <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} aria-hidden="true" />
           </button>
 
           <button
             type="button"
             aria-label="Quick view"
-            className="grid h-9 w-9 place-items-center rounded-full border border-white/50 bg-ivory/70 text-ink backdrop-blur-md transition-all duration-200 hover:border-maroon hover:text-maroon"
+            className={`${actionButton} border-glass-edge bg-glass-strong text-ink hover:border-maroon hover:text-maroon`}
             onClick={() => setIsQuickViewOpen(true)}
           >
-            <Eye size={17} />
+            <Eye size={17} aria-hidden="true" />
           </button>
         </div>
+
+        <GalleryDots
+          count={images.length}
+          activeIndex={activeIndex}
+          className="absolute inset-x-0 bottom-3 z-20"
+        />
       </div>
 
       {isQuickViewOpen && (
         <QuickViewModal product={product} onClose={() => setIsQuickViewOpen(false)} />
       )}
 
-      <div className="p-[18px]">
-        <span className="inline-flex items-center gap-2 eyebrow">
-          {product.category}
-        </span>
+      <div className="px-1 pt-4">
+        <span className="eyebrow">{product.category}</span>
 
-        <h3 className="my-2 text-lg leading-snug">
-          <Link to={`/product/${product._id}`}>{product.title}</Link>
+        <h3 className="mb-2 mt-1.5 font-display text-2xl leading-tight">
+          <Link className="transition-colors hover:text-maroon" to={`/product/${product._id}`}>
+            {product.title}
+          </Link>
         </h3>
 
-        <p className="m-0 flex items-baseline gap-2">
-          <span className="font-semibold tabular-nums text-maroon">{formatPrice(product.price)}</span>
+        <p className="m-0 flex items-baseline gap-2.5">
+          <span className="text-lg tabular-nums text-maroon">{formatPrice(product.price)}</span>
           {hasDiscount && (
-            <span className="text-sm tabular-nums text-muted line-through">{formatPrice(product.compareAtPrice)}</span>
+            <span className="text-meta tabular-nums text-muted line-through">
+              {formatPrice(compareAt)}
+            </span>
           )}
         </p>
 
-        {product.stock <= 0 ? (
-          <span className="mt-1 inline-block text-meta font-medium text-stock-out">Out of Stock</span>
-        ) : product.stock <= 5 ? (
-          <span className="mt-1 inline-block text-meta font-medium text-stock-low">
-            Only {product.stock} left
+        {stock <= 0 ? (
+          <span className="mt-1.5 inline-block text-meta font-medium text-stock-out">
+            Out of Stock
+          </span>
+        ) : stock <= 5 ? (
+          <span className="mt-1.5 inline-block text-meta font-medium text-stock-low">
+            Only {stock} left
           </span>
         ) : null}
       </div>
