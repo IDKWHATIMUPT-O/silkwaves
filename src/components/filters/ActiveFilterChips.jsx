@@ -43,7 +43,7 @@ export default function ActiveFilterChips({ filters, bounds, activeCount, onRemo
           type="button"
           onClick={() => onRemove(item)}
           aria-label={`Remove filter ${item.label}`}
-          className="inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-glass-edge bg-glass-strong px-3 text-[0.72rem] text-ink transition-colors duration-200 hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className="inline-flex min-h-8 items-center gap-1.5 border border-glass-edge bg-glass-strong px-3 text-[0.72rem] text-ink transition-colors duration-200 hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           {item.label}
           <X size={13} aria-hidden="true" />
@@ -52,7 +52,7 @@ export default function ActiveFilterChips({ filters, bounds, activeCount, onRemo
       <button
         type="button"
         onClick={onClearAll}
-        className="min-h-8 rounded-pill px-2 text-[0.72rem] text-muted underline-offset-2 hover:text-maroon hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        className="min-h-8 px-2 text-[0.72rem] text-muted underline-offset-2 hover:text-maroon hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
       >
         Clear all
       </button>

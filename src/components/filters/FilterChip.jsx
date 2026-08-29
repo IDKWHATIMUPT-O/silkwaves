@@ -1,7 +1,7 @@
 import cx from '../../utils/cx.js';
 
 const BASE =
-  'inline-flex min-h-10 items-center gap-2 rounded-pill border px-3.5 text-meta ' +
+  'inline-flex min-h-10 items-center gap-2 border px-3.5 text-meta ' +
   'transition-colors duration-200 touch-manipulation ' +
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
 

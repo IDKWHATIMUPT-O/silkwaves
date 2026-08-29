@@ -42,7 +42,7 @@ export default function FilterBar({
   );
 
   const triggerClass =
-    'inline-flex min-h-10 items-center gap-2 rounded-pill border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
+    'inline-flex min-h-10 items-center gap-2 border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
 
   return (
     <div

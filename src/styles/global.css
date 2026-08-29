@@ -36,9 +36,12 @@
   /* Deliberately a NEW namespace. Tailwind v4 already ships --radius-sm/md/lg
      and --blur-*; redefining those would silently restyle every existing
      rounded-lg in the app. */
-  --radius-control: 0.625rem;
-  --radius-card: 0.875rem;
-  --radius-panel: 1.25rem;
+  /* Flat by choice: hard edges throughout, so the photography and the type do
+     the work. --radius-pill survives only for things that are actually round
+     (the sale seal, the gallery dots). */
+  --radius-control: 0;
+  --radius-card: 0;
+  --radius-panel: 0;
   --radius-pill: 999px;
 
   /* Restrained glass: translucent ivory, a light rim, and ONE inner top
@@ -84,11 +87,16 @@ body {
   font-family: var(--font-body);
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
+/* Inside @layer base on purpose. Unlayered rules beat every layered one no
+   matter the specificity, so as plain CSS this quietly won against any
+   font-* utility — a card title could not opt out of the serif. */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
 }
 
 /* One eyebrow, replacing two near-identical recipes that had drifted apart

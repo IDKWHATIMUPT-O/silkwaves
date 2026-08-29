@@ -13,5 +13,7 @@ export function formatPrice(price) {
   if (price === null || price === undefined || price === '') return '';
   const value = Number(price);
   if (!Number.isFinite(value)) return '';
-  return inr.format(value);
+  // en-IN sets the rupee tight against the first digit. A narrow no-break space
+  // separates symbol from numeral without letting them wrap apart.
+  return inr.format(value).replace(/^₹/, '₹ ');
 }
