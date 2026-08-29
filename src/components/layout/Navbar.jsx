@@ -1,6 +1,6 @@
 import { Heart, Menu, ShoppingBag, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { getCartCount } from '../../utils/cart.js';
 import { isLoggedIn } from '../../services/customerAuth.js';
 import { getWishlist, isWishlisted } from '../../services/wishlist.js';
@@ -13,6 +13,33 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+  // Only the landing page has something worth showing through. Anywhere else
+  // the bar is opaque from the start.
+  const [atPageTop, setAtPageTop] = useState(true);
+
+  useEffect(() => {
+    if (pathname !== '/') return undefined;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setAtPageTop(window.scrollY < 40);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [pathname]);
+
+  const overHero = pathname === '/' && atPageTop;
+
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -63,7 +90,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-ivory/90 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-20 border-b transition-colors duration-300 ${
+        overHero
+          ? 'border-transparent bg-transparent'
+          : 'border-line bg-ivory/90 backdrop-blur-md'
+      }`}
+    >
       <nav
         className="mx-auto flex min-h-[76px] w-[min(1160px,calc(100%-32px))] items-center justify-between"
         aria-label="Main navigation"

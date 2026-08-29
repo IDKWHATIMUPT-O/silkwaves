@@ -56,7 +56,7 @@ export default function MandalaHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[calc(100vh-76px)] flex-col items-center justify-center overflow-hidden bg-ivory px-6"
+      className="relative -mt-[76px] flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 pt-[76px]"
     >
       <div className="mandala" aria-hidden="true">
         <img src="/mandala.webp" alt="" width="740" height="740" className="mandala-img" />

@@ -42,7 +42,7 @@ export default function FilterBar({
   );
 
   const triggerClass =
-    'inline-flex min-h-10 items-center gap-2 border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
+    'min-h-10 items-center gap-2 border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
 
   return (
     <div
@@ -55,7 +55,7 @@ export default function FilterBar({
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className={cx(triggerClass, 'md:hidden')}
+          className={cx(triggerClass, 'inline-flex md:hidden')}
         >
           <SlidersHorizontal size={15} aria-hidden="true" />
           Filters
