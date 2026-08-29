@@ -53,13 +53,13 @@ export default function ComingSoon() {
       <BackgroundMusic src="/raga.mp3" />
 
       {/* Rotating rangoli. aria-hidden because it carries no information. */}
-      <div className="cs-rangoli" aria-hidden="true">
+      <div className="mandala" aria-hidden="true">
         <img
           src="/mandala.webp"
           alt=""
           width="740"
           height="740"
-          className="cs-rangoli-img"
+          className="mandala-img"
         />
       </div>
 

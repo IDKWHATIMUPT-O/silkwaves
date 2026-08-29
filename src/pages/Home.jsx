@@ -1,105 +1,66 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-import { animate } from 'animejs';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import CategoryCard from '../components/category/CategoryCard.jsx';
 import ProductGrid from '../components/product/ProductGrid.jsx';
-import Button from '../components/ui/Button.jsx';
+import MandalaHero from '../components/home/MandalaHero.jsx';
+import FeaturedArrival from '../components/home/FeaturedArrival.jsx';
 import useProducts from '../hooks/useProducts.js';
 import useReveal from '../hooks/useReveal.js';
+import { applyFilters } from '../utils/productFilters.js';
 import { categories } from '../services/productService.js';
 
 export default function Home() {
   const { products, status } = useProducts();
-  const featuredProducts = products.slice(0, 4);
-  const heroRef = useRef(null);
   const categoryGridRef = useReveal({ max: 6 });
 
-  useEffect(() => {
-    if (!heroRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    animate(heroRef.current.querySelectorAll('[data-reveal]'), {
-      opacity: [0, 1],
-      translateY: [20, 0],
-      delay: (_, i) => i * 90,
-      duration: 420,
-      easing: 'easeOutQuad',
-    });
-  }, []);
+  // Newest first, so the window display is genuinely the latest piece rather
+  // than whatever happens to sit first in the collection.
+  const newestFirst = applyFilters(products, { sort: 'newest' });
+  const featured = newestFirst[0] ?? null;
+  const rest = newestFirst.slice(1, 5);
 
   return (
     <>
-      <section className="overflow-hidden bg-gradient-to-r from-ivory-soft to-ivory">
-        <div
-          ref={heroRef}
-          className="mx-auto grid min-h-[calc(100vh-76px)] w-[min(1160px,calc(100%-32px))] items-center gap-10 py-12 md:grid-cols-[minmax(0,0.9fr)_minmax(320px,1.1fr)] md:gap-14"
-        >
-          <div className="max-w-[590px]" data-reveal>
-            <span className="inline-flex items-center gap-2 eyebrow">
-              <Sparkles size={18} /> Handpicked luxury sarees
-            </span>
-            <h1 className="font-display mt-4 mb-2 text-display leading-[0.95] text-maroon">
-              SILKWAVES
-            </h1>
-            <p className="max-w-[560px] text-lead leading-relaxed text-muted">
-              Elegant sarees selected for weddings, festive evenings, and every moment that
-              deserves a softer kind of grandeur.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3.5">
-              <Button to="/collections">Shop Collections</Button>
-              <Button to="/collections?category=Type%201%20Sarees" variant="secondary">
-                Explore Type 1 <ArrowRight size={18} />
-              </Button>
-            </div>
-          </div>
-          <div
-            className="relative overflow-hidden rounded-lg shadow-soft"
-            aria-label="Model wearing a luxury saree"
-            data-reveal
-          >
-            <img
-              className="h-[min(720px,76vh)] w-full object-cover"
-              src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=90"
-              alt="Luxury silk saree styling"
-            />
-            <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-maroon/20" />
-          </div>
-        </div>
-      </section>
+      <MandalaHero />
 
-      <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-16 md:py-22">
-        <div className="mb-7">
-          <span className="eyebrow">
-            Curated edits
-          </span>
-          <h2 className="mt-2 text-h1">Shop by category</h2>
+      {status === 'success' && <FeaturedArrival product={featured} />}
+
+      <section className="mx-auto w-[min(1160px,calc(100%-32px))] py-20 md:py-28">
+        <div className="mb-10 max-w-lg">
+          <span className="eyebrow">Curated edits</span>
+          <h2 className="mt-3 text-h1">Shop by category</h2>
         </div>
-        <div ref={categoryGridRef} className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div ref={categoryGridRef} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <CategoryCard key={category} category={category} />
           ))}
         </div>
       </section>
 
-      <section className="bg-ivory-soft py-16 md:py-22">
+      <section className="bg-ivory-soft py-20 md:py-28">
         <div className="mx-auto w-[min(1160px,calc(100%-32px))]">
-          <div className="mb-7 flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="eyebrow">
-                Featured
-              </span>
-              <h2 className="mt-2 text-h1">New arrivals</h2>
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-lg">
+              <span className="eyebrow">Just in</span>
+              <h2 className="mt-3 text-h1">New arrivals</h2>
             </div>
-            <Button to="/collections" variant="secondary">
-              View all <ArrowRight size={18} />
-            </Button>
+
+            <Link
+              to="/collections?sort=newest"
+              className="inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.22em] text-maroon transition-colors hover:text-maroon-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            >
+              View all
+              <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </div>
-          {status === 'loading' ? (
-            <p className="m-0 rounded-lg border border-line bg-ivory p-7 text-center text-muted">
-              Loading featured sarees...
+
+          {status === 'loading' || status === 'idle' ? (
+            <p className="m-0 border border-line bg-ivory p-7 text-center text-muted">
+              Loading featured sarees…
             </p>
           ) : (
-            <ProductGrid products={featuredProducts} />
+            <ProductGrid products={rest} emptyMessage="New pieces are on their way." />
           )}
         </div>
       </section>

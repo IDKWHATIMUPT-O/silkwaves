@@ -5,6 +5,27 @@ const VOLUME = 0.3;
 
 const GESTURES = ['pointerdown', 'keydown', 'touchstart', 'wheel'];
 
+const PREFERENCE_KEY = 'silkwaves:sound';
+
+// Someone who switched the music off should not have to switch it off again on
+// the next page or the next visit. Wrapped because storage throws outright in
+// some privacy modes rather than just returning null.
+function readPreference() {
+  try {
+    return localStorage.getItem(PREFERENCE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writePreference(value) {
+  try {
+    localStorage.setItem(PREFERENCE_KEY, value);
+  } catch {
+    /* no persistence available; the session still works */
+  }
+}
+
 // The file is already trimmed to begin at the 25s mark, so the browser's own
 // loop handles repeats seamlessly — no seeking back on every pass.
 export default function BackgroundMusic({ src }) {
@@ -37,10 +58,13 @@ export default function BackgroundMusic({ src }) {
       }
     };
 
-    // Someone who has asked their system to reduce motion is asking for a
-    // calmer page, so nothing starts on its own for them. The button still
+    // Nothing starts on its own for someone who has already switched the music
+    // off, or who has asked their system for reduced motion. The button still
     // works — it just has to be their decision.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      readPreference() === 'off' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return () => {
         cancelled = true;
         audio.removeEventListener('play', sync);
@@ -93,8 +117,10 @@ export default function BackgroundMusic({ src }) {
 
     if (audio.paused) {
       audio.volume = VOLUME;
+      writePreference('on');
       audio.play().catch(() => {});
     } else {
+      writePreference('off');
       audio.pause();
     }
   }
