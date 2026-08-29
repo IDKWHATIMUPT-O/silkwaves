@@ -11,7 +11,10 @@ import { AVAILABILITY, DISCOUNT_BUCKETS } from '../../utils/productFilters.js';
  * field, rather than showing an empty row.
  */
 export default function FilterPanel({ filters, facets, setFilter, setFilters, toggleFilter, layout = 'bar' }) {
-  const wrap = layout === 'bar' ? 'flex flex-wrap items-start gap-x-8 gap-y-5' : 'flex flex-col gap-6';
+  const wrap =
+    layout === 'bar'
+      ? 'grid grid-cols-2 items-start gap-x-8 gap-y-6 lg:grid-cols-4'
+      : 'flex flex-col gap-6';
 
   const usableDiscounts = DISCOUNT_BUCKETS.filter((b) => b <= facets.maxDiscount);
 

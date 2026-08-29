@@ -1,14 +1,16 @@
-import { useState } from 'react';
-import { SlidersHorizontal } from 'lucide-react';
+import { useId, useState } from 'react';
+import { ChevronDown, SlidersHorizontal } from 'lucide-react';
 import FilterPanel from './FilterPanel.jsx';
 import FilterDrawer from './FilterDrawer.jsx';
 import SortSelect from './SortSelect.jsx';
 import ActiveFilterChips from './ActiveFilterChips.jsx';
+import cx from '../../utils/cx.js';
 
 /**
- * Glass shell: translucent ivory over the page, a light rim, and one inner top
- * highlight from --shadow-glass. Carries role="group" — the old bar had an
- * aria-label sitting on a plain div, where it was ignored entirely.
+ * Collapsed by default, on every screen size. Expanded, the facets are taller
+ * than the viewport lets the first row of sarees survive — the shop opened on
+ * a wall of controls with no product visible. Filtering is the exception;
+ * browsing is the default, so the panel earns its space only when asked for.
  */
 export default function FilterBar({
   filters,
@@ -20,7 +22,9 @@ export default function FilterBar({
   toggleFilter,
   clearAll,
 }) {
+  const [expanded, setExpanded] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const panelId = useId();
 
   const panelProps = { filters, facets, setFilter, setFilters, toggleFilter };
 
@@ -31,34 +35,59 @@ export default function FilterBar({
     return toggleFilter(item.key, item.value);
   }
 
+  const countBadge = activeCount > 0 && (
+    <span className="grid h-5 min-w-5 place-items-center rounded-pill bg-maroon px-1 text-[0.68rem] tabular-nums text-ivory">
+      {activeCount}
+    </span>
+  );
+
+  const triggerClass =
+    'inline-flex min-h-10 items-center gap-2 rounded-pill border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
+
   return (
     <div
       role="group"
       aria-label="Collection filters"
-      className="mb-7 rounded-panel border border-glass-edge bg-glass p-5 shadow-glass backdrop-blur-glass"
+      className="mb-6 rounded-panel border border-glass-edge bg-glass px-4 py-3 shadow-glass backdrop-blur-glass"
     >
-      <div className="flex items-center justify-between gap-4 md:hidden">
+      <div className="flex items-center justify-between gap-3">
+        {/* Below md the facets live in a bottom sheet; above it they expand in place. */}
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="inline-flex min-h-10 items-center gap-2 rounded-pill border border-glass-edge bg-glass-strong px-4 text-meta text-ink transition-colors hover:border-maroon hover:text-maroon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className={cx(triggerClass, 'md:hidden')}
         >
           <SlidersHorizontal size={15} aria-hidden="true" />
           Filters
-          {activeCount > 0 && (
-            <span className="grid h-5 min-w-5 place-items-center rounded-pill bg-maroon px-1 text-[0.68rem] tabular-nums text-ivory">
-              {activeCount}
-            </span>
-          )}
+          {countBadge}
         </button>
+
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          aria-controls={panelId}
+          className={cx(triggerClass, 'hidden md:inline-flex')}
+        >
+          <SlidersHorizontal size={15} aria-hidden="true" />
+          Filters
+          {countBadge}
+          <ChevronDown
+            size={15}
+            aria-hidden="true"
+            className={cx('transition-transform duration-200', expanded && 'rotate-180')}
+          />
+        </button>
+
         <SortSelect value={filters.sort} onChange={(value) => setFilter('sort', value)} />
       </div>
 
-      <div className="hidden md:flex md:items-start md:justify-between md:gap-8">
+      <div
+        id={panelId}
+        hidden={!expanded}
+        className="mt-4 hidden border-t border-glass-edge pt-5 md:block"
+      >
         <FilterPanel {...panelProps} layout="bar" />
-        <div className="shrink-0 pt-1">
-          <SortSelect value={filters.sort} onChange={(value) => setFilter('sort', value)} />
-        </div>
       </div>
 
       <ActiveFilterChips
