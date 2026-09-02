@@ -1,0 +1,18 @@
+# Deliberately scoped to deploy previews only.
+#
+# There is no [build.environment] block here on purpose: production builds must
+# keep reading the tracked .env, where VITE_COMING_SOON is true. Setting these
+# globally would take the countdown off silkwaves.in the moment this file
+# reaches main.
+#
+# Previews are for showing the storefront to people before launch, so they
+# build with the countdown off and no API URL — which makes the site serve the
+# local product fixture rather than reading or writing the production database.
+[context.deploy-preview.environment]
+  VITE_COMING_SOON = "false"
+  VITE_API_BASE_URL = ""
+
+# Same treatment for branch deploys, if they are ever switched on.
+[context.branch-deploy.environment]
+  VITE_COMING_SOON = "false"
+  VITE_API_BASE_URL = ""
