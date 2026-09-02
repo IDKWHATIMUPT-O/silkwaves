@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import BackgroundMusic from '../components/ui/BackgroundMusic.jsx';
 
-// Ganesh Chaturthi 2026 falls on Monday 14 September; 11:02 IST is the start of
-// the Madhyahna muhurat. The explicit +05:30 offset means the countdown lands on
-// the same instant no matter what timezone the visitor's device is set to.
-const LAUNCH_AT = new Date('2026-09-14T11:02:00+05:30');
+// Sharad Navratri 2026 begins on Sunday 11 October. The launch moved from
+// Ganesh Chaturthi; 10 October was considered and dropped because it is Ashwin
+// Amavasya, a new moon, which is not a day to open a shop on.
+//
+// The explicit +05:30 offset means the countdown lands on the same instant no
+// matter what timezone the visitor's device is set to.
+const LAUNCH_AT = new Date('2026-10-11T11:02:00+05:30');
 
 // Derived from LAUNCH_AT so the printed date can never drift out of sync with
 // what the countdown is counting towards. Both the locale and the time zone are
@@ -102,7 +105,7 @@ export default function ComingSoon() {
         ) : (
           <>
             <p className="text-[0.68rem] uppercase tracking-[0.38em] text-muted sm:text-xs">
-              Unveiling on Ganesh Chaturthi
+              Unveiling on Navratri
             </p>
 
             {/* One clean sentence for screen readers instead of the tiles'
